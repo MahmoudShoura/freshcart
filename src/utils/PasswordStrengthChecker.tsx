@@ -1,4 +1,4 @@
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 
 interface PasswordStrengthProps {
   password: string;
@@ -168,8 +168,8 @@ export default function PasswordStrengthChecker({
           {requirements.map((requirement, index) => (
             <div key={index} className="flex items-center gap-2">
               <span
-                className={`flex-shrink-0 w-1.5 h-1.5 rounded-full ${
-                  requirement.met ? "bg-green-500" : "bg-gray-300"
+                className={`shrink-0 w-1 h-1 rounded-full ${
+                  requirement.met ? "bg-green-500" : "bg-orange-500"
                 }`}
               ></span>
               <span className={getRequirementStatus(requirement.met)}>
