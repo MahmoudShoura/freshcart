@@ -15,6 +15,7 @@ import signupAction from "../../server/signup.actions";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import PasswordStrengthChecker from "@/utils/PasswordStrengthChecker";
 
 export default function SignupForm() {
   const router = useRouter();
@@ -25,6 +26,7 @@ export default function SignupForm() {
     register,
     handleSubmit,
     setError,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<signupFormValues>({
     defaultValues: {
@@ -41,6 +43,8 @@ export default function SignupForm() {
     mode: "onSubmit",
     reValidateMode: "onChange",
   });
+
+  const passwordValue = watch("password");
 
   const onSubmit: SubmitHandler<signupFormValues> = async (values) => {
     try {
@@ -139,14 +143,7 @@ export default function SignupForm() {
             </button>
           </div>
 
-          <div className="password-requirements">
-            <div className=" flex gap-2 items-center">
-              <div className="bar grow h-1  rounded-md overflow-hidden   bg-gray-200">
-                <div className="progress bg-orange-500 w-50 h-full"></div>
-              </div>
-              <span>Fair</span>
-            </div>
-          </div>
+          <PasswordStrengthChecker password={passwordValue} showLabel={true} />
 
           {errors.password ? (
             <p className="text-red-500 mt-0.5">*{errors.password.message}</p>
