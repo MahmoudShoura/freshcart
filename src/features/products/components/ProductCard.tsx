@@ -67,7 +67,7 @@ export default function ProductCard({ info }: { info: Product }) {
       }
     } catch (error) {
       //TODO
-      toast.error("failed to add product");
+      toast.error("failed to add product 'Login First'");
     }
   };
 
@@ -92,7 +92,7 @@ export default function ProductCard({ info }: { info: Product }) {
       toast.error(
         err.response?.data?.message ||
           err.message ||
-          "Failed to update wishlist",
+          "Failed to update wishlist 'Login First'",
       );
     }
   };
