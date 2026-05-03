@@ -4,6 +4,7 @@ import { faFacebook, faGoogle } from "@fortawesome/free-brands-svg-icons";
 import {
   faEnvelope,
   faEye,
+  faEyeSlash,
   faLock,
   faSpinner,
   faStar,
@@ -186,12 +187,15 @@ export default function LoginForm() {
 
               <button
                 type="button"
-                onClick={() => setShowPassword(!showPassword)}
+                onClick={() => {
+                  setShowPassword(!showPassword);
+                }}
                 className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
               >
                 <FontAwesomeIcon
-                  icon={faEye}
-                  className="text-gray-400"
+                  key={showPassword ? "open" : "closed"}
+                  icon={showPassword ? faEyeSlash : faEye}
+                  className="animate-eye"
                 />
               </button>
             </div>

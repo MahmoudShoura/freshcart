@@ -33,13 +33,23 @@ export default function Navbar() {
   const { logout } = useLogout();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
 
   const { numberOfCartItems } = useAppSelector((state) => state.cart);
   const { wishlistIds } = useAppSelector((state) => state.wishlist);
 
   function toggleMenu() {
-    setIsMenuOpen(!isMenuOpen);
+    if (isMenuOpen) {
+      setIsClosing(true);
+
+      setTimeout(() => {
+        setIsMenuOpen(false);
+        setIsClosing(false);
+      }, 400);
+    } else {
+      setIsMenuOpen(true);
+    }
   }
 
   useEffect(() => {
@@ -310,15 +320,24 @@ export default function Navbar() {
         {isMenuOpen && (
           <>
             <div
-              className="  background  cursor-pointer   fixed z-30 inset-0 bg-black/50"
+              className={`background cursor-pointer fixed z-30 inset-0 bg-black/50 transition-opacity duration-400
+  ${isClosing ? "opacity-0" : "opacity-100"}`}
               onClick={toggleMenu}
             ></div>
 
-            <div className="   offcanvas fixed  z-40 bg-white top-0 bottom-0 p-5 space-y-5 animate-slide-in">
-              <div className="flex justify-between items-center border-b border-gray-300/50 pb-4">
-                <Image src={freshCartLogo} alt="fresh cart logo" />
+            <div
+              className={`offcanvas space-y-5 fixed z-40 bg-white top-0 bottom-0 p-3 w-80 
+            ${isClosing ? "animate-slide-out" : "animate-slide-in"}`}
+            >
+              <div className="flex justify-between items-center border-b border-gray-300/50 mt-4 pb-4">
+                <Link onClick={toggleMenu} href="/">
+                  <Image src={freshCartLogo} alt="fresh cart logo" />
+                </Link>
 
-                <button className="btn rounded-full py-3" onClick={toggleMenu}>
+                <button
+                  className="btn bg-primary-500 hover:bg-primary-600 text-white rounded-full py-1 px-2"
+                  onClick={toggleMenu}
+                >
                   <FontAwesomeIcon icon={faXmark} />
                 </button>
               </div>
@@ -327,7 +346,7 @@ export default function Navbar() {
                 <input
                   type="text"
                   placeholder="Search for products"
-                  className=" min-w-96  form-control"
+                  className=" min-w-74 form-control"
                 />
 
                 <FontAwesomeIcon
@@ -339,10 +358,11 @@ export default function Navbar() {
               <div>
                 <h2 className="text-xl font-bold">Main Menu</h2>
 
-                <ul className="  *:hover:bg-gray-100  transition-colors duration-s00 space-y-2 mt-3">
+                <ul className="  *:hover:bg-gray-100 *:rounded-lg transition-colors duration-s00 space-y-2 mt-3">
                   <li>
                     <Link
-                      className={`${pathname === "/wishlist" ? "text-primary-600  bg-primary-100" : ""} 
+                      onClick={toggleMenu}
+                      className={`${pathname === "/wishlist" ? "text-primary-600  bg-primary-100 rounded-lg" : ""} 
 
                   flex  items-center gap-2  transition-colors duration-200 px-2 py-3`}
                       href="/wishlist"
@@ -360,7 +380,8 @@ export default function Navbar() {
 
                   <li>
                     <Link
-                      className={`${pathname === "/cart" ? "text-primary-600 bg-primary-100" : " "}  flex items-center gap-2 transition-colors duration-200 px-2 py-3`}
+                      onClick={toggleMenu}
+                      className={`${pathname === "/cart" ? "text-primary-600 rounded-lg bg-primary-100" : " "}  flex items-center gap-2 transition-colors duration-200 px-2 py-3`}
                       href="/cart"
                     >
                       <div className="relative">
@@ -383,7 +404,8 @@ export default function Navbar() {
 
                   <li>
                     <Link
-                      className={`${pathname === "/account" ? "text-primary-600  bg-primary-100" : ""} 
+                      onClick={toggleMenu}
+                      className={`${pathname === "/account" ? "text-primary-600 rounded-lg  bg-primary-100 " : ""} 
 
                   flex  items-center gap-2  transition-colors duration-200 px-2 py-3`}
                       href="/account"
@@ -399,13 +421,16 @@ export default function Navbar() {
               <div className="border-t border-gray-300/50 pt-5">
                 <h2 className="text-xl font-bold"> Account</h2>
 
-                <ul className="  *:hover:bg-gray-100  transition-colors duration-s00 space-y-2 mt-3">
+                <ul className="  *:hover:bg-gray-100 *:rounded-lg transition-colors duration-s00 space-y-2 mt-3">
                   {isAuthenticated ? (
                     <li
                       className={` cursor-pointer   flex items-center gap-2
 
                     transition-colors duration-200 px-2 py-3`}
-                      onClick={logout}
+                      onClick={() => {
+                        logout();
+                        toggleMenu();
+                      }}
                     >
                       <FontAwesomeIcon
                         className="text-xl"
@@ -418,7 +443,8 @@ export default function Navbar() {
                     <>
                       <li>
                         <Link
-                          className={`${pathname === "/signup" ? "text-primary-600  bg-primary-100" : ""} 
+                          onClick={toggleMenu}
+                          className={`${pathname === "/signup" ? "text-primary-600 rounded-lg bg-primary-100" : ""} 
 
                   flex  items-center gap-2 transition-colors duration-200 px-2 py-3`}
                           href="/signup"
@@ -434,7 +460,8 @@ export default function Navbar() {
 
                       <li>
                         <Link
-                          className={`${pathname === "/login" ? "text-primary-600  bg-primary-100" : ""} 
+                          onClick={toggleMenu}
+                          className={`${pathname === "/login" ? "text-primary-600 rounded-lg bg-primary-100" : ""} 
 
                   flex  items-center gap-2  transition-colors duration-200 px-2 py-3`}
                           href="/login"

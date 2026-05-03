@@ -11,8 +11,6 @@
   --color-primary-700: #15803d;
   --color-primary-800: #166534;
   --color-primary-900: #14532d;
-
-  --animate-slide-in: slide-in 300ms ease-out;
 }
 
 @layer base {
@@ -46,6 +44,25 @@
   @apply max-w-7xl  mx-auto px-4 sm:px-6 lg:px-8;
 }
 
+@keyframes eye-pop {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-eye {
+  animation: eye-pop 0.25s ease;
+}
+
 @keyframes slide-in {
   from {
     transform: translateX(-100%);
@@ -54,6 +71,22 @@
   to {
     transform: translateX(0);
   }
+}
+@keyframes slide-out {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-slide-in {
+  animation: slide-in 400ms ease-out forwards;
+}
+
+.animate-slide-out {
+  animation: slide-out 400ms ease-in forwards;
 }
 
 .swiper-pagination-bullet {
