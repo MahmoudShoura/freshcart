@@ -148,7 +148,7 @@ export default function SignupForm() {
           {errors.password ? (
             <p className="text-red-500 mt-0.5">*{errors.password.message}</p>
           ) : (
-            <p className="text-xs text-gray-500 -mt-2">
+            <p className="text-xs text-gray-500 mt-2">
               Must be at least 8 characters with numbers and symbols
             </p>
           )}
