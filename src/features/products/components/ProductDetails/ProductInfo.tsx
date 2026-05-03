@@ -87,7 +87,7 @@ export default function ProductInfo({ product }: { product: Product }) {
       const message =
         err.response?.data?.message ||
         err.message ||
-        "Failed to update wishlist";
+        "Failed to update wishlist 'Login First'";
       toast.error(message);
     }
   }
@@ -104,7 +104,7 @@ export default function ProductInfo({ product }: { product: Product }) {
         dispatch(setCartInfo(CartInfo));
       }
     } catch (error) {
-      toast.error("Failed to add product to cart");
+      toast.error("Failed to add product to cart 'Login First'");
     } finally {
       setIsAddingToCart(false);
     }

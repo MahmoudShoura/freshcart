@@ -67,7 +67,7 @@ export default function ProductCard({ info }: { info: Product }) {
       }
     } catch (error) {
       //TODO
-      toast.error("failed to add product 'Login First'");
+      toast.error("failed to add product'Login First'");
     }
   };
 
