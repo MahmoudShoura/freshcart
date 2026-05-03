@@ -80,11 +80,11 @@ export const calculatePasswordStrength = (password: string): StrengthResult => {
     percentage = 66;
   } else if (score === 5) {
     strength = "Strong";
-    color = "bg-lime-500";
+    color = "bg-lime-400";
     percentage = 83;
   } else if (score === 6) {
     strength = "Very Strong";
-    color = "bg-green-500";
+    color = "bg-primary-500";
     percentage = 100;
   }
 
