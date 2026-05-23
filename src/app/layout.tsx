@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     siteName: "FreshCart",
     images: [
       {
-        url: "/og-image.png",
+        url: "og-image.png",
         width: 1200,
         height: 630,
         alt: "FreshCart",
@@ -59,11 +59,11 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "FreshCart",
     description: "Fresh groceries delivered to your doorstep.",
-    images: ["/og-image.png"],
+    images: ["public/og-image.png"],
   },
 
   icons: {
-    icon: "/favicon.ico",
+    icon: "public/favicon.ico",
   },
 };
 
