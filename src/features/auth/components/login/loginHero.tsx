@@ -4,17 +4,21 @@ import {
   faTruck,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import Image from "next/image";
 export default function LoginHero() {
   return (
-    <div className="hidden lg:block">
+    <div className="hidden lg:block self-start pt-22">
       <div className="text-center space-y-6">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          className="w-full h-96 object-cover rounded-2xl shadow-lg"
-          src="https://storage.googleapis.com/uxpilot-auth.appspot.com/2e5810ff3e-e750761ebcd4ae5907db.png"
-          alt="fresh vegetables and fruits shopping cart illustration, modern cleanstyle, green theme"
-        />
+        <div className="rounded-2xl overflow-hidden shadow-md bg-[#f6fbe9]">
+          <Image
+            src="/images/login-hero.png"
+            alt="FreshCart grocery delivery"
+            width={700}
+            height={500}
+            priority
+            className="w-full h-auto object-contain"
+          />
+        </div>
 
         <div className="space-y-4">
           <h2 className="text-2xl font-bold text-gray-800">
