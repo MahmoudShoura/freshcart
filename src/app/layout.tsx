@@ -32,7 +32,7 @@ export default async function RootLayout({
 }: {
   children: ReactNode;
 }) {
-  const authValues = await verifytoken(); 
+  const authValues = await verifytoken();
 
   let cartState = defaultCartState;
   let wishlistState: { products: WishlistProduct[]; wishlistIds: string[] } = {
@@ -47,11 +47,16 @@ export default async function RootLayout({
         getWishlist(),
       ]);
 
+      const totalCartItems = CartResponse.data.products.reduce(
+        (total, item) => total + item.count,
+        0,
+      );
+
       cartState = {
         cartId: CartResponse.cartId,
         totalCartPrice: CartResponse.data.totalCartPrice,
         products: CartResponse.data.products,
-        numberOfCartItems: CartResponse.numOfCartItems,
+        numberOfCartItems: totalCartItems,
         isLoading: false,
         error: null,
       };

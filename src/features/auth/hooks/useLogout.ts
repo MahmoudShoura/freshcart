@@ -3,6 +3,7 @@ import { setAuthInfo } from "@/store/auth.slice";
 import { clearToken } from "../server/auth.actions";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { clearCart, clearGuestCart } from "@/features/cart/store/cart.slice";
 
 export default function useLogout() {
   const dispatch = useDispatch();
@@ -10,6 +11,9 @@ export default function useLogout() {
 
   const logout = async () => {
     await clearToken();
+
+    dispatch(clearCart());
+    dispatch(clearGuestCart());
 
     dispatch(setAuthInfo({ isAuthenticated: false, userInfo: null }));
 

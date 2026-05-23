@@ -1,5 +1,13 @@
 "use client";
 
+import { mergeGuestCartAfterLogin } from "@/features/cart/server/cart.actions";
+
+import {
+  getCartFromStorage,
+  clearCartStorage,
+} from "@/features/cart/services/cart.service";
+
+import { setCartInfo, clearGuestCart } from "@/features/cart/store/cart.slice";
 import { faFacebook, faGoogle } from "@fortawesome/free-brands-svg-icons";
 import {
   faEnvelope,
@@ -55,6 +63,17 @@ export default function LoginForm() {
 
         await setToken(response.data.token, values.rememberMe);
 
+        const guestCart = getCartFromStorage();
+
+        if (guestCart.length > 0) {
+          const mergedCart = await mergeGuestCartAfterLogin(guestCart);
+
+          dispatch(setCartInfo(mergedCart));
+
+          clearCartStorage();
+
+          dispatch(clearGuestCart());
+        }
         //* isAuthenticated => true
         //^ action creator
         dispatch(
@@ -64,6 +83,7 @@ export default function LoginForm() {
         toast.success(response?.message);
         setTimeout(() => {
           router.push("/");
+          router.refresh();
         }, 3000);
       } else {
         if (response?.errors) {

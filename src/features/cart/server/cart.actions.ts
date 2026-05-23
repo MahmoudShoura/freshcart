@@ -104,3 +104,16 @@ export async function updateProductQuantity(
     throw error;
   }
 }
+export async function mergeGuestCartAfterLogin(
+  items: { productId: string; quantity: number }[],
+) {
+  for (const item of items) {
+    for (let i = 0; i < item.quantity; i++) {
+      await addProductToCart({
+        productId: item.productId,
+      });
+    }
+  }
+
+  return await getLoggedUserCart();
+}

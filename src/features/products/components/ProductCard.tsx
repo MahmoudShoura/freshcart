@@ -13,12 +13,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { Product } from "../types/Products.types";
 import Rating from "@/components/ui/Rating";
-import {
-  addProductToCart,
-  getLoggedUserCart,
-} from "@/features/cart/server/cart.actions";
+import { useAddToCart } from "@/features/cart/hooks/useAddToCart";
 import { toast } from "react-toastify";
-import { setCartInfo } from "@/features/cart/store/cart.slice";
 import { useDispatch } from "react-redux";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import {
@@ -45,6 +41,7 @@ export default function ProductCard({ info }: { info: Product }) {
   } = info;
 
   const dispatch = useAppDispatch();
+  const { handleAddToCart } = useAddToCart();
   const { wishlistIds } = useAppSelector((state) => state.wishlist);
   const isInWishlist = wishlistIds.includes(id);
 
@@ -53,23 +50,6 @@ export default function ProductCard({ info }: { info: Product }) {
   const discountPercentage = priceAfterDiscount
     ? Math.round(((price - priceAfterDiscount) / price) * 100)
     : 0;
-
-  const handleAddToCart = async () => {
-    try {
-      const response = await addProductToCart({ productId: id });
-      console.log(response);
-      if (response.status === "success") {
-        toast.success(response.message);
-        //TODO :Set cart info => Slice
-        const CartInfo = await getLoggedUserCart();
-        setCartInfo(CartInfo); //^action creator
-        dispatch(setCartInfo(CartInfo));
-      }
-    } catch (error) {
-      //TODO
-      toast.error("failed to add product'Login First'");
-    }
-  };
 
   const handleAddToWishlist = async () => {
     try {
@@ -184,7 +164,7 @@ export default function ProductCard({ info }: { info: Product }) {
 
             <button
               className="bg-primary-600 text-white h-10 w-10 rounded-full flex items-center justify-center hover:bg-primary-900"
-              onClick={handleAddToCart}
+              onClick={() => handleAddToCart(id)}
             >
               <FontAwesomeIcon icon={faPlus} />
             </button>

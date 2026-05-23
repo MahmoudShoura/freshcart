@@ -29,11 +29,7 @@ import {
   addToWishlist,
   removeFromWishlist,
 } from "@/features/wishlist/server/wishlist.actions";
-import {
-  addProductToCart,
-  getLoggedUserCart,
-} from "@/features/cart/server/cart.actions";
-import { setCartInfo } from "@/features/cart/store/cart.slice";
+import { useAddToCart } from "@/features/cart/hooks/useAddToCart";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import {
   setWishlist,
@@ -67,6 +63,7 @@ export default function ProductInfo({ product }: { product: Product }) {
   const [count, setCount] = useState(1);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   const dispatch = useAppDispatch();
+  const { handleAddToCart } = useAddToCart();
   const { wishlistIds } = useAppSelector((state) => state.wishlist);
   const isInWishlist = wishlistIds.includes(id);
 
@@ -89,24 +86,6 @@ export default function ProductInfo({ product }: { product: Product }) {
         err.message ||
         "Failed to update wishlist 'Login First'";
       toast.error(message);
-    }
-  }
-
-  async function handleAddToCart() {
-    if (isAddingToCart) return;
-
-    setIsAddingToCart(true);
-    try {
-      const response = await addProductToCart({ productId: id });
-      if (response.status === "success") {
-        toast.success(response.message);
-        const CartInfo = await getLoggedUserCart();
-        dispatch(setCartInfo(CartInfo));
-      }
-    } catch (error) {
-      toast.error("Failed to add product to cart 'Login First'");
-    } finally {
-      setIsAddingToCart(false);
     }
   }
 
@@ -313,7 +292,7 @@ export default function ProductInfo({ product }: { product: Product }) {
               <div className="flex flex-col sm:flex-row gap-3 mb-6">
                 <button
                   id="add-to-cart"
-                  onClick={handleAddToCart}
+                  onClick={() => handleAddToCart(id)}
                   disabled={isAddingToCart}
                   className="flex-1 text-white py-3.5 px-6 rounded-xl font-medium bg-primary-600 hover:bg-primary-700 active:scale-98 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200"
                 >
