@@ -11,7 +11,7 @@ export default function LoginHero() {
       <div className="text-center space-y-6">
         <div className="rounded-2xl overflow-hidden shadow-md bg-[#f6fbe9]">
           <Image
-            src="login-hero.png"
+            src="/login-hero.png"
             alt="FreshCart grocery delivery"
             width={700}
             height={500}
