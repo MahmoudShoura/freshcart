@@ -3,9 +3,10 @@ import { getWishlist } from "@/features/wishlist/server/wishlist.actions";
 
 import { WishlistProduct } from "@/features/wishlist/types/wishlist.types";
 
+export const dynamic = "force-dynamic";
 export default async function WishlistPage() {
   let initialWishlist: WishlistProduct[] = [];
-  
+
   try {
     initialWishlist = await getWishlist();
   } catch (error) {

@@ -23,6 +23,7 @@ let defaultCartState: CartState = {
   numberOfCartItems: 0,
   totalCartPrice: 0,
   products: [],
+  guestCart: [],
   error: null,
   isLoading: false,
 };
@@ -64,6 +65,7 @@ export default async function RootLayout({
         totalCartPrice: CartResponse.data.totalCartPrice,
         products: CartResponse.data.products,
         numberOfCartItems: totalCartItems,
+        guestCart: [],
         isLoading: false,
         error: null,
       };
