@@ -16,7 +16,7 @@ export default function LoginHero() {
             width={700}
             height={500}
             priority
-            className="w-full h-auto object-contain rounded-2xl shadow-md"
+            className="w-full max-h-52 lg:max-h-none object-contain rounded-2xl shadow-md"
           />
         </div>
 
