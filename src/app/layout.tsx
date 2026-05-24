@@ -30,41 +30,8 @@ let defaultCartState: CartState = {
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: {
-    default: "FreshCart",
-    template: "%s | FreshCart",
-  },
-
-  description:
-    "Fresh groceries delivered to your doorstep. Shop fresh fruits, vegetables, dairy and more with fast delivery.",
-
-  openGraph: {
-    title: "FreshCart",
-    description: "Fresh groceries delivered to your doorstep.",
-    url: "https://freshcart-lime-gamma.vercel.app/",
-    siteName: "FreshCart",
-    images: [
-      {
-        url: "og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "FreshCart",
-      },
-    ],
-    locale: "en_US",
-    type: "website",
-  },
-
-  twitter: {
-    card: "summary_large_image",
-    title: "FreshCart",
-    description: "Fresh groceries delivered to your doorstep.",
-    images: ["public/og-image.png"],
-  },
-
-  icons: {
-    icon: "public/favicon.ico",
-  },
+  title: "FreshCart",
+  description: "Fresh groceries delivered to your doorstep.",
 };
 
 export default async function RootLayout({
