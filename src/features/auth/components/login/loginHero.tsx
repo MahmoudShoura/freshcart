@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 export default function LoginHero() {
   return (
-    <div className="hidden lg:block self-center pb-10">
+    <div className="block self-center pb-6 lg:pb-10">
       <div className="text-center space-y-6">
         <div className="rounded-2xl overflow-hidden shadow-lg bg-[#f6fbe9]">
           <Image
