@@ -7,11 +7,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 export default function LoginHero() {
   return (
-    <div className="hidden lg:block self-start pt-22">
+    <div className="hidden lg:block self-center pb-10">
       <div className="text-center space-y-6">
-        <div className="rounded-2xl overflow-hidden shadow-md bg-[#f6fbe9]">
+        <div className="rounded-2xl overflow-hidden shadow-lg bg-[#f6fbe9]">
           <Image
-            src="/login-hero.png"
+            src="/login-hero-v2.png"
             alt="FreshCart grocery delivery"
             width={700}
             height={500}

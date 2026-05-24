@@ -99,7 +99,7 @@ export default function LoginForm() {
 
   return (
     <div className="w-full">
-      <div className="bg-white rounded-2xl shadow-xl p-8 lg:p-12">
+      <div className="bg-white rounded-3xl shadow-xl p-8 lg:p-12">
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center mb-4">
