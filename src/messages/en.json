@@ -1,0 +1,18 @@
+{
+  "nav": {
+    "home": "Home",
+    "categories": "Categories",
+    "brands": "Brands",
+    "offers": "Offers",
+    "login": "Login",
+    "signup": "Sign Up"
+  },
+
+  "login": {
+    "welcome": "Welcome Back!",
+    "subtitle": "Sign in to continue your fresh shopping experience",
+    "email": "Email Address",
+    "password": "Password",
+    "signin": "Sign In"
+  }
+}

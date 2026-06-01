@@ -82,8 +82,8 @@ export default function CartItem({ info }: { info: CartItemType }) {
         <div className="p-4 sm:gap-5">
           <div className="flex gap-4 sm:gap-6">
             {/* Product Image */}
-            <Link href={` `} className="relative shrink-0 group">
-              <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-xl bg-linear-to-br from-gray-50 via-white to-gray-100 p-3 hover:scale-110 transition-transform duration-900 ">
+            <Link href={`/products/${id} `} className="relative shrink-0 group">
+              <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-xl bg-linear-to-br from-gray-50 via-white to-gray-100 p-3 hover:scale-110 transition-transform duration-500 ">
                 <img
                   src={imageCover}
                   alt={title}
@@ -101,13 +101,13 @@ export default function CartItem({ info }: { info: CartItemType }) {
             <div className="flex-1 min-w-0 flex flex-col">
               {/* Top Section: Category & Title */}
               <div className="mb-3">
-                <Link href={` `} className="group/title">
+                <Link href={`/products/${id} `} className="group/title">
                   <h3 className="font-semibold text-gray-900 group-hover/title:text-primary-600 transition-colors leading-relaxed  ">
                     {title}
                   </h3>
                 </Link>
                 <div className="flex items-center gap-2 mt-2">
-                  <span className="inline-block px-2.5 py-1 bg-linear-to-r from-primary-50 to bg-emerald-50 text-primary-700 rounded-full text-sm">
+                  <span className="inline-block px-2.5 py-1 bg-linear-to-r from-primary-50 to-emerald-50 text-primary-700 rounded-full text-sm">
                     {category.name}
                   </span>
                   <span className="text-xs text-gray-400 ">.</span>
@@ -129,7 +129,7 @@ export default function CartItem({ info }: { info: CartItemType }) {
               </div>
 
               {/* Bottom Section : Quantity Controls % Actions  */}
-              <div className="mt-auto flex flex-wrap items-center justify-between gap-4">
+              <div className="flex flex-wrap items-center justify-between gap-4 pt-2">
                 {/* Quantity Selector */}
 
                 <div className="flex items-center">

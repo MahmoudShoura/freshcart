@@ -1,41 +1,50 @@
 "use client";
 
-import { useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "@/store/store";
 import { toast } from "react-toastify";
-import { addGuestCartItem } from "../store/cart.slice";
+
+import { addProductToCart, getLoggedUserCart } from "../server/cart.actions";
+
+import { addGuestCartItem, setCartInfo } from "../store/cart.slice";
+
+import { Product } from "@/features/products/types/Products.types";
 
 export function useAddToCart() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  //   const handleAddToCart = async (productId: string) => {
-  //     try {
-  //       const response = await addProductToCart({
-  //         productId,
-  //       });
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
 
-  //       if (response.status === "success") {
-  //         toast.success(response.message);
+  const handleAddToCart = async (product: Product) => {
+    if (!isAuthenticated) {
+      dispatch(
+        addGuestCartItem({
+          productId: product.id,
+          title: product.title,
+          imageCover: product.imageCover,
+          price: product.priceAfterDiscount || product.price,
+          category: product.category.name,
+        }),
+      );
 
-  //         const cartInfo = await getLoggedUserCart();
+      toast.success("Product added to cart");
+      return;
+    }
 
-  //         dispatch(setCartInfo(cartInfo));
+    try {
+      await addProductToCart({
+        productId: product.id,
+      });
 
-  //         return;
-  //       }
-  //     } catch {
-  //       dispatch(addGuestCartItem({ productId }));
+      const cartInfo = await getLoggedUserCart();
 
-  //       toast.success("Product added to cart");
-  //     }
-  //   };
+      dispatch(setCartInfo(cartInfo));
 
-  const handleAddToCart = async (productId: string) => {
-    console.log("clicked add to cart", productId);
-
-    dispatch(addGuestCartItem({ productId }));
-
-    toast.success("Product added to cart");
+      toast.success("Product added to cart");
+    } catch {
+      toast.error("Failed to add product");
+    }
   };
+
   return {
     handleAddToCart,
   };

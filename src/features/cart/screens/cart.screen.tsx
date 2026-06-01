@@ -11,12 +11,38 @@ import Link from "next/link";
 import { useSelector } from "react-redux";
 import CartItem from "../components/CartItem";
 import CartSummary from "../components/CartSummary";
+import { useDispatch } from "react-redux";
+import { clearCart } from "../store/cart.slice";
+import { clearCartStorage } from "../services/cart.service";
+import { clearLoggedUserCart } from "../server/cart.actions";
+import { toast } from "react-toastify";
 
 export default function CartScreen() {
-  const { numberOfCartItems, products, totalCartPrice } = useAppSelector(
-    (state) => state.cart,
-  );
+  const { numberOfCartItems, products, guestCart, totalCartPrice } =
+    useAppSelector((state) => state.cart);
 
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+
+  const dispatch = useDispatch();
+  const guestProducts = guestCart.map((item) => ({
+    _id: item.productId,
+    count: item.quantity,
+  }));
+  const handleClearCart = async () => {
+    try {
+      if (isAuthenticated) {
+        await clearLoggedUserCart();
+      } else {
+        clearCartStorage();
+      }
+
+      dispatch(clearCart());
+
+      toast.success("Cart cleared successfully");
+    } catch (error) {
+      toast.error("Failed to clear cart");
+    }
+  };
   return (
     <>
       <div className="bg-gray-50 min-h-screen py-8">
@@ -59,9 +85,26 @@ export default function CartScreen() {
               {/* Cart Items List */}
 
               <div className="space-y-4">
-                {products.map((product) => (
-                  <CartItem key={product._id} info={product} />
-                ))}
+                {products.length > 0
+                  ? products.map((product) => (
+                      <CartItem key={product._id} info={product} />
+                    ))
+                  : guestProducts.length > 0
+                    ? guestProducts.map((item) => (
+                        <div
+                          key={item._id}
+                          className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm"
+                        >
+                          <p className="font-medium text-gray-800">
+                            Product added to cart
+                          </p>
+
+                          <p className="text-sm text-gray-500 mt-2">
+                            Quantity: {item.count}
+                          </p>
+                        </div>
+                      ))
+                    : null}
               </div>
 
               {/* Clear Cart - Positioned below items as subtle action*/}
@@ -74,7 +117,10 @@ export default function CartScreen() {
                   <span>Continue Shopping</span>
                 </Link>
 
-                <button className="group flex items-center gap-2 text-sm text-gray-400 hover:text-red-500 transition-colors">
+                <button
+                  onClick={handleClearCart}
+                  className="group flex items-center gap-2 text-sm text-gray-400 hover:text-red-500 transition-colors"
+                >
                   <FontAwesomeIcon
                     icon={faTrash}
                     className="text-xs group-hover:scale-110 transition-transform"

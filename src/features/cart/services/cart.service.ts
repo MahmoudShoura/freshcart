@@ -5,6 +5,10 @@ export const CART_KEY = "freshcart-cart";
 export interface GuestCartItem {
   productId: string;
   quantity: number;
+  title: string;
+  imageCover: string;
+  price: number;
+  category: string;
 }
 
 function isBrowser(): boolean {

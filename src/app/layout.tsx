@@ -11,7 +11,7 @@ import { getLoggedUserCart } from "@/features/cart/server/cart.actions";
 import { CartState } from "@/features/cart/store/cart.slice";
 import { getWishlist } from "@/features/wishlist/server/wishlist.actions";
 import { WishlistProduct } from "@/features/wishlist/types/wishlist.types";
-
+import { LanguageProvider } from "@/context/language.context";
 const exo = Exo({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800", "900"],
@@ -89,9 +89,11 @@ export default async function RootLayout({
             wishlist: wishlistState,
           }}
         >
-          <Navbar />
-          {children}
-          <Footer />
+          <LanguageProvider>
+            <Navbar />
+            {children}
+            <Footer />
+          </LanguageProvider>
         </Providers>
       </body>
     </html>

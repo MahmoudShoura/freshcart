@@ -20,6 +20,7 @@ export default function Slider() {
     <>
       <section className="relative">
         <Swiper
+          dir="ltr"
           slidesPerView={1}
           spaceBetween={0}
           modules={[Navigation, Pagination, Autoplay]}

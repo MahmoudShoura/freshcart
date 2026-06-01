@@ -25,7 +25,7 @@ import { LoginFormValues, loginSchema } from "../../schemas/login.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import loginAction from "../../server/login.actions";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { setToken } from "../../server/auth.actions";
 import { setAuthInfo } from "@/store/auth.slice";
 
@@ -36,6 +36,9 @@ export default function LoginForm() {
   const router = useRouter();
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
+
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect");
 
   const {
     register,
@@ -82,7 +85,7 @@ export default function LoginForm() {
 
         toast.success(response?.message);
         setTimeout(() => {
-          router.push("/");
+          router.push(redirect || "/");
           router.refresh();
         }, 3000);
       } else {
@@ -96,7 +99,6 @@ export default function LoginForm() {
       }
     } catch {}
   };
-
   return (
     <div className="w-full">
       <div className="bg-white rounded-3xl shadow-xl p-8 lg:p-12">

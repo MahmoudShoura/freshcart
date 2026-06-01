@@ -18,11 +18,16 @@ export interface CartState {
   error: string | null;
 }
 
+const guestCartFromStorage = getCartFromStorage();
+
 const initialState: CartState = {
-  numberOfCartItems: 0,
+  numberOfCartItems: guestCartFromStorage.reduce(
+    (total, item) => total + item.quantity,
+    0,
+  ),
   cartId: null,
   products: [],
-  guestCart: [],
+  guestCart: guestCartFromStorage,
   totalCartPrice: 0,
   isLoading: false,
   error: null,
@@ -96,6 +101,7 @@ const cartSlice = createSlice({
       state.cartId = null;
       state.numberOfCartItems = 0;
       state.products = [];
+      state.guestCart = [];
       state.totalCartPrice = 0;
     },
   },

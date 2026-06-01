@@ -12,10 +12,10 @@ export default async function OurCategories() {
       <section id="categories" className="py-10">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-8">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3" dir="ltr">
               <div className="h-8 w-1.5 bg-linear-to-b from-emerald-500 to-emerald-700 rounded-full"></div>
 
-              <h2 className="text-3xl font-bold text-gray-800">
+              <h2 className="text-3xl font-bold text-gray-800 text-left">
                 Shop by <span className="text-primary-600">Category</span>
               </h2>
             </div>{" "}
@@ -24,7 +24,10 @@ export default async function OurCategories() {
               className="text-primary-600 hover:text-primary-700 font-medium flex items-center cursor-pointer"
             >
               View All Categories
-              <FontAwesomeIcon icon={faArrowRight} className="ml-2" />
+              <FontAwesomeIcon
+                icon={faArrowRight}
+                className="ml-2 rtl:rotate-180 transition-transform"
+              />
             </Link>
           </div>
 

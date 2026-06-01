@@ -19,13 +19,14 @@ export default async function Footer() {
     <>
       <footer className="py-5 bg-white border-t border-gray-400/20">
         <div className="container">
-          <div className="grid md:grid-cols-2                xl:grid-cols-5  gap-20    py-8">
+          <div className="grid md:grid-cols-2 xl:grid-cols-5 gap-20 py-8">
             <div className="xl:col-span-2 space-y-3">
               <Image src={freshCartFullLogo} alt="Fresh Cart Logo" />
               <p>
                 FreshCart is a versatile e-commerce platform offering a wide
                 range of products, from clothing to electronics. It provides a
-                user-friendly experience for seamless <br></br> shopping across
+                user-friendly experience for seamless <br></br>{" "}
+                <span className="text-left" dir="ltr"></span> shopping across
                 diverse categories.
               </p>
 
@@ -66,7 +67,7 @@ export default async function Footer() {
                       "Baby & Toys",
                       "Beauty & Health",
                       "Electronics",
-                    ].includes(category.name)
+                    ].includes(category.name),
                   )
                   .map((category) => (
                     <li key={category._id}>

@@ -19,7 +19,8 @@ export default function NewsletterSection() {
           {/* LEFT */}
           <div>
             {/* Header */}
-            <div className="flex items-center gap-3 mb-6">
+            <div className="flex items-center gap-3 mb-6 rtl:flex-row-reverse">
+              {" "}
               <div className="bg-emerald-500 text-white w-13 h-12 flex justify-center items-center rounded-2xl shadow-lg shadow-emerald-300">
                 <FontAwesomeIcon icon={faEnvelope} className="text-xl" />
               </div>
@@ -32,13 +33,13 @@ export default function NewsletterSection() {
             </div>
 
             {/* Title */}
-            <h1 className="mb-4 text-[28px] sm:text-[34px] font-extrabold leading-tight text-gray-900">
+            <h1 className="mb-4 text-[28px] sm:text-[34px] font-extrabold leading-tight text-gray-900 text-start">
               Get the Freshest Updates{" "}
               <span className="text-emerald-600"> Delivered Free</span>
             </h1>
 
             {/* Description */}
-            <p className="mb-8 max-w-xl text-gray-600">
+            <p className="mb-8 max-w-xl text-gray-600 text-start">
               Weekly recipes, seasonal offers & exclusive member perks.
             </p>
 
@@ -51,7 +52,7 @@ export default function NewsletterSection() {
               ].map((item, index) => (
                 <div
                   key={index}
-                  className="flex w-full items-center gap-2 rounded-xl bg-white px-3 py-2 text-xs text-gray-700 shadow-sm"
+                  className="flex w-full items-center gap-2 rtl:flex-row-reverse rounded-xl bg-white px-3 py-2 text-xs text-gray-700 shadow-sm"
                 >
                   <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-emerald-100">
                     <FontAwesomeIcon
@@ -70,13 +71,17 @@ export default function NewsletterSection() {
             <div className="flex max-w-xl flex-col sm:flex-row gap-3">
               <input
                 type="email"
+                dir="ltr"
                 placeholder="you@example.com"
-                className="h-12 w-full rounded-xl bg-white px-4 text-sm text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-400/30"
+                className="h-12 w-full rounded-xl bg-white px-4 text-sm text-gray-700 text-start shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-400/30"
               />
 
               <button className="inline-flex h-12 w-full sm:w-auto items-center justify-center gap-2 rounded-xl bg-linear-to-r from-emerald-700 to-emerald-400 px-6 text-sm font-semibold text-white shadow-lg transition hover:from-emerald-800 hover:to-emerald-600">
                 Subscribe
-                <FontAwesomeIcon icon={faArrowRight} className="text-xs" />
+                <FontAwesomeIcon
+                  icon={faArrowRight}
+                  className="text-xs transition-transform"
+                />
               </button>
             </div>
 
@@ -103,7 +108,7 @@ export default function NewsletterSection() {
 
               {/* أزرار التحميل */}
               <div className="space-y-4 mb-8">
-                <button className="w-full flex items-center gap-4 bg-slate-800 hover:bg-slate-700 border border-slate-700 p-3 rounded-2xl transition-all">
+                <button className="w-full flex items-center gap-4 rtl:flex-row-reverse bg-slate-800 hover:bg-slate-700 border border-slate-700 p-3 rounded-2xl transition-all">
                   <FontAwesomeIcon icon={faApple} className="text-3xl ml-2" />
                   <div className="text-left">
                     <p className="text-[10px] uppercase text-slate-400 font-semibold tracking-wider">
@@ -113,12 +118,12 @@ export default function NewsletterSection() {
                   </div>
                 </button>
 
-                <button className="w-full flex items-center gap-4 bg-slate-800 hover:bg-slate-700 border border-slate-700 p-3 rounded-2xl transition-all">
+                <button className="w-full flex items-center gap-4 rtl:flex-row-reverse bg-slate-800 hover:bg-slate-700 border border-slate-700 p-3 rounded-2xl transition-all">
                   <FontAwesomeIcon
                     icon={faGooglePlay}
                     className="text-3xl ml-2 text-emerald-400"
                   />
-                  <div className="text-left">
+                  <div className="text-left rtl:text-right">
                     <p className="text-[10px] uppercase text-slate-400 font-semibold tracking-wider">
                       Get it on
                     </p>
@@ -128,7 +133,7 @@ export default function NewsletterSection() {
               </div>
 
               {/* التقييمات */}
-              <div className="mt-6 flex items-center gap-2 text-sm text-gray-300">
+              <div className="mt-6 flex items-center gap-2 text-sm text-gray-300 rtl:flex-row-reverse">
                 <div className="flex gap-1 text-yellow-400">
                   {[...Array(5)].map((_, i) => (
                     <FontAwesomeIcon key={i} icon={faStar} />

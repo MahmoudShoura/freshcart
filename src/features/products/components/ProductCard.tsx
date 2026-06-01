@@ -81,7 +81,7 @@ export default function ProductCard({ info }: { info: Product }) {
     <>
       <div
         id="product-card"
-        className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-2xl transition-all duration-300"
+        className="h-full bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-2xl transition-all duration-300 flex flex-col"
       >
         <div className="relative">
           <Link className="block" href={`/products/${id}`}>
@@ -102,7 +102,10 @@ export default function ProductCard({ info }: { info: Product }) {
             )}
           </div>
 
-          <div className="absolute top-3 right-3 flex flex-col space-y-2">
+          <div
+            className="absolute top-3 right-3 flex flex-col space-y-2"
+            dir="ltr"
+          >
             <button
               onClick={handleAddToWishlist}
               className={`bg-white h-8 w-8 rounded-full flex items-center justify-center transition-colors duration-200 ${
@@ -129,9 +132,14 @@ export default function ProductCard({ info }: { info: Product }) {
           </div>
         </div>
 
-        <div className="p-4">
-          <div className="text-xs text-gray-500 mb-1"> {category.name} </div>
-          <h3 className="font-medium mb-1 cursor-pointer">
+        <div className="p-4 flex flex-col flex-1">
+          <div className="text-xs text-gray-500 mb-1 text-start" dir="ltr">
+            {category.name}
+          </div>
+          <h3
+            className="font-medium mb-2 cursor-pointer text-start min-h-14 leading-7"
+            dir="ltr"
+          >
             <Link
               className="line-clamp-2 hover:text-emerald-600 transition"
               href={`/products/${id}`}
@@ -140,8 +148,8 @@ export default function ProductCard({ info }: { info: Product }) {
             </Link>
           </h3>
 
-          <div className=" flex items-center mb-2">
-            <div className="flex text-sm text-amber-400 mr-2">
+          <div className="flex items-center mb-2 gap-2" dir="ltr">
+            <div className="flex text-sm text-amber-400">
               <Rating rating={ratingsAverage} />
             </div>
 
@@ -150,13 +158,13 @@ export default function ProductCard({ info }: { info: Product }) {
             </span>
           </div>
 
-          <div className="flex items-center justify-between">
-            <div>
-              <span className="text-lg font-bold text-primary-600">
+          <div className="mt-auto pt-3 flex items-end justify-between gap-3">
+            <div dir="ltr" className="text-left flex-1 min-w-0">
+              <span className="text-lg font-bold text-primary-600 whitespace-nowrap">
                 {priceAfterDiscount || price} EGP
               </span>
               {onSale && (
-                <span className="text-sm text-gray-500 line-through ml-2">
+                <span className="text-sm text-gray-500 line-through ml-2 whitespace-nowrap">
                   {price} EGP
                 </span>
               )}
@@ -164,7 +172,7 @@ export default function ProductCard({ info }: { info: Product }) {
 
             <button
               className="bg-primary-600 text-white h-10 w-10 rounded-full flex items-center justify-center hover:bg-primary-900"
-              onClick={() => handleAddToCart(id)}
+              onClick={() => handleAddToCart(info)}
             >
               <FontAwesomeIcon icon={faPlus} />
             </button>

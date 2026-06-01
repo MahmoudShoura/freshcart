@@ -126,18 +126,17 @@ export default function ProductInfo({ product }: { product: Product }) {
 
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Product Images - Wider layout  */}
-          <div id="product-images" className="lg:w-1/4">
-            <div className="bg-white rounded-xl shadow-sm p-4 sti top-4">
+          <div id="product-images" className="lg:w-1/4" dir="ltr">
+            <div className="bg-white rounded-xl shadow-sm p-4 sticky top-4 overflow-hidden">
               <ImageGallery
-                items={images.map((image) => {
-                  return {
-                    original: image,
-                    thumbnail: image,
-                  };
-                })}
+                items={images.map((image) => ({
+                  original: image,
+                  thumbnail: image,
+                }))}
                 showFullscreenButton={false}
                 showNav={false}
                 showPlayButton={false}
+                isRTL={false}
               />
             </div>
           </div>
@@ -172,28 +171,28 @@ export default function ProductInfo({ product }: { product: Product }) {
 
               {/* Ratings */}
 
-              <div className="flex items-center gap-3 mb-4">
-                <Rating rating={ratingsAverage} />
-
-                <span>
-                  {ratingsAverage}({ratingsQuantity} reviews)
-                </span>
+              <div
+                dir="ltr"
+                className="flex items-center gap-2 text-sm text-gray-600"
+              >
+                <span>{ratingsAverage}</span>
+                <span>({ratingsQuantity} reviews)</span>
               </div>
 
               {/* Price Section */}
 
-              <div className=" flex items-center flex-wrap gap-3 mb-6">
-                <span className="text-3xl font-bold text-gray-900">
-                  {priceAfterDiscount || price} EGP
+              <div className="flex items-end flex-wrap gap-4 mb-6">
+                <span dir="ltr" className="text-3xl font-bold text-gray-900">
+                  EGP {priceAfterDiscount || price}
                 </span>
 
                 {onSale && (
                   <>
-                    <span className=" text-lg text-gray-400 line-through">
+                    <span className="text-base text-gray-400 line-through">
                       {price} EGP
                     </span>
 
-                    <span className=" bg-red-500 text-white text-sm px-3 py-1 rounded-full font-medium">
+                    <span className=" bg-red-500 text-white text-sm px-2.5 py-1 rounded-full font-medium">
                       save {discountPercentage}%
                     </span>
                   </>
@@ -240,8 +239,11 @@ export default function ProductInfo({ product }: { product: Product }) {
                   <div className="flex items-center border-2 border-gray-200 rounded-lg overflow-hidden">
                     <button
                       id="decrease-qty"
+                      disabled={count <= 1}
                       onClick={() => {
-                        setCount(count - 1);
+                        if (count > 1) {
+                          setCount(count - 1);
+                        }
                       }}
                       className="px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-primary-600 transition disabled:opacity-10"
                     >
@@ -269,7 +271,7 @@ export default function ProductInfo({ product }: { product: Product }) {
                     </button>
                   </div>
 
-                  <span className="text-sm text-gray-500">
+                  <span dir="ltr" className="text-sm text-gray-500">
                     {quantity} available
                   </span>
                 </div>
@@ -278,23 +280,25 @@ export default function ProductInfo({ product }: { product: Product }) {
               {/* Total Price */}
 
               <div className="bg-gray-100 rounded-lg p-4 mb-6">
-                <div className="flex justify-between items-center ">
-                  <span className="text-gray-600">Total Price:</span>
+                <div className="flex justify-between items-center rtl:flex-row-reverse">
+                  <span className="text-gray-600">Total Price</span>
 
-                  <span className="text-2xl font-bold text-primary-600">
+                  <span
+                    dir="ltr"
+                    className="text-2xl font-bold text-primary-600"
+                  >
                     {count * (priceAfterDiscount || price)} EGP
                   </span>
                 </div>
               </div>
 
               {/* Action Buttons */}
-
-              <div className="flex flex-col sm:flex-row gap-3 mb-6">
+              <div className="flex flex-col sm:flex-row gap-4 mb-6">
                 <button
                   id="add-to-cart"
-                  onClick={() => handleAddToCart(id)}
+                  onClick={() => handleAddToCart(product)}
                   disabled={isAddingToCart}
-                  className="flex-1 text-white py-3.5 px-6 rounded-xl font-medium bg-primary-600 hover:bg-primary-700 active:scale-98 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200"
+                  className="flex-1 text-white py-4 px-6 rounded-xl font-medium bg-primary-600 hover:bg-primary-700 hover:shadow-md cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-300"
                 >
                   {isAddingToCart ? (
                     <>
@@ -311,9 +315,9 @@ export default function ProductInfo({ product }: { product: Product }) {
 
                 <button
                   id="buy-now"
-                  className="flex-1 bg-gray-900 text-white py-3.5 px-6 rounded-xl font-medium hover:bg-gray-800 active:scale-100"
+                  className="flex-1 bg-gray-900 text-white py-4 px-6 rounded-xl font-medium hover:bg-black hover:shadow-md transition-all duration-300"
                 >
-                  <FontAwesomeIcon icon={faBolt} />
+                  <FontAwesomeIcon icon={faBolt} className="me-2" />
                   Buy Now
                 </button>
               </div>
@@ -351,11 +355,16 @@ export default function ProductInfo({ product }: { product: Product }) {
                     </div>
 
                     <div>
-                      <h4 className="font-medium text-gray-900 text-sm">
+                      <h4
+                        dir="ltr"
+                        className="font-medium text-gray-900 text-sm"
+                      >
                         Free Delivery
                       </h4>
 
-                      <p className="text-xs text-gray-500 ">Orders over $50</p>
+                      <p dir="ltr" className="text-xs text-gray-500 ">
+                        Orders over $50
+                      </p>
                     </div>
                   </div>
 
@@ -365,11 +374,16 @@ export default function ProductInfo({ product }: { product: Product }) {
                     </div>
 
                     <div>
-                      <h4 className="font-medium text-gray-900 text-sm ">
+                      <h4
+                        dir="ltr"
+                        className="font-medium text-gray-900 text-sm"
+                      >
                         30 Days Return
                       </h4>
 
-                      <p className="text-xs ">Money Back</p>
+                      <p dir="ltr" className="text-xs ">
+                        Money Back
+                      </p>
                     </div>
                   </div>
 
@@ -379,11 +393,16 @@ export default function ProductInfo({ product }: { product: Product }) {
                     </div>
 
                     <div>
-                      <h4 className="font-medium text-gray-900 text-sm">
+                      <h4
+                        dir="ltr"
+                        className="font-medium text-gray-900 text-sm"
+                      >
                         Secure Payment
                       </h4>
 
-                      <p className="text-xs text-gray-500">100% Protected</p>
+                      <p dir="ltr" className="text-xs text-gray-500">
+                        100% Protected
+                      </p>
                     </div>
                   </div>
                 </div>

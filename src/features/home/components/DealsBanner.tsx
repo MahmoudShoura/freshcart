@@ -70,7 +70,7 @@ export default function DealsBanner() {
           <div className="relative overflow-hidden rounded-2xl bg-linear-to-br from-primary-400 to-primary-700 p-8">
             <div className="absolute top-0 right-0 w-45 h-50 bg-white/10 rounded-full -translate-y-20 translate-x-20"></div>
             <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full translate-y-16 -translate-x-16"></div>
-            <div className="relative z-10">
+            <div className="relative z-10 text-start">
               <div className="mb-5 inline-flex items-center gap-2 bg-black/15 px-3 py-1 rounded-full">
                 <FontAwesomeIcon
                   icon={faClock}
@@ -90,9 +90,10 @@ export default function DealsBanner() {
               {/* countdown Timer Placeholder */}
 
               {/* Discount Info */}
-              <div className="mb-2 flex flex-col gap-3 md:flex-row items-center text-white ">
+              <div className="mb-2 flex flex-col gap-3 md:flex-row md:justify-between md:items-center text-white">
+                {" "}
                 <CountdownTimer />
-                <span className="text-sm font-medium opacity-90 ps-2">
+                <span className="text-sm font-medium opacity-90">
                   Use code: <strong className="font-bold">ORGANIC40</strong>
                 </span>
               </div>
@@ -101,7 +102,10 @@ export default function DealsBanner() {
                 className="inline-flex items-center gap-2 bg-white text-emerald-600 px-6 py-3 rounded-full font-medium transition-transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white/30"
               >
                 Shop Now
-                <FontAwesomeIcon icon={faArrowRight} />
+                <FontAwesomeIcon
+                  icon={faArrowRight}
+                  className="rtl:rotate-180 transition-transform"
+                />{" "}
               </Link>
             </div>
           </div>
@@ -110,7 +114,7 @@ export default function DealsBanner() {
           <div className="relative overflow-hidden rounded-2xl bg-linear-to-br from-orange-400 to-orange-700 p-8">
             <div className="absolute top-0 right-0 w-50 h-45 bg-white/10 rounded-full -translate-y-20 translate-x-20"></div>
             <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full translate-y-16 -translate-x-16"></div>
-            <div className="relative z-10">
+            <div className="relative z-10 text-start">
               <div className="inline-flex items-center mb-4 gap-2 bg-white/20 px-3 py-1 rounded-full text-white">
                 <span>🌟</span>
                 <span>New Arrivals</span>
@@ -137,7 +141,10 @@ export default function DealsBanner() {
                 className="inline-flex items-center gap-2 bg-white text-orange-500 px-6 py-3 rounded-full font-medium transition-transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white/30"
               >
                 Explore Now
-                <FontAwesomeIcon icon={faArrowRight} />
+                <FontAwesomeIcon
+                  icon={faArrowRight}
+                  className="rtl:rotate-180 transition-transform"
+                />
               </Link>
             </div>
           </div>

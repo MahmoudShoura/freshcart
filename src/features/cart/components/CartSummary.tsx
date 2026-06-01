@@ -9,6 +9,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 
 export default function CartSummary({
   totalCartPrice,
@@ -21,6 +23,7 @@ export default function CartSummary({
   const shipping = subtotal > 500 ? 0 : 100;
   const total = Math.round(shipping + subtotal);
 
+  const userToken = useSelector((state: RootState) => state.auth.token);
   return (
     <>
       <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden sticky top-24 shadow-sm">
@@ -114,8 +117,8 @@ export default function CartSummary({
           {/* Checkout Button */}
 
           <Link
-            href="/checkout"
-            className="w-full bg-linear-to-r from-primary-600 to-primary-700  hover:from-primary-700 hover:to-primary-800      text-white py-4 px-3 rounded-2xl  flex items-center justify-center gap-2  "
+            href={userToken ? "/checkout" : "/login?redirect=/checkout"}
+            className="w-full bg-linear-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white py-4 px-3 rounded-2xl flex items-center justify-center gap-2"
           >
             <FontAwesomeIcon icon={faLock} />
             <span>Secure Checkout</span>

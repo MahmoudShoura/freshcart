@@ -89,6 +89,34 @@
   animation: slide-out 400ms ease-in forwards;
 }
 
+@keyframes slide-in-rtl {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out-rtl {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.animate-slide-in-rtl {
+  animation: slide-in-rtl 400ms ease-out forwards;
+}
+
+.animate-slide-out-rtl {
+  animation: slide-out-rtl 400ms ease-in forwards;
+}
+
 .swiper-pagination-bullet {
   width: 12px !important;
   height: 12px !important;
@@ -106,4 +134,12 @@
   background: rgba(255, 255, 255, 1) !important;
   width: 32px !important;
   border-radius: 6px !important;
+}
+
+#product-images .react-image-gallery-content {
+  direction: ltr;
+}
+
+#product-images .react-image-gallery-thumbnails-wrapper {
+  direction: ltr;
 }

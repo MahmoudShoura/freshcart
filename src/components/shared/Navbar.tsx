@@ -28,10 +28,12 @@ import { AppState, useAppSelector } from "@/store/store";
 import useLogout from "@/features/auth/hooks/useLogout";
 import { getAllCategories } from "@/features/categories/server/categories.actions";
 import { Category } from "@/features/categories/types/category.types";
+import { useLanguage } from "@/context/language.context";
+import { translations } from "@/context/translations";
 
 export default function Navbar() {
   const { logout } = useLogout();
-
+  const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -65,11 +67,18 @@ export default function Navbar() {
     fetchCategories();
   }, []);
 
-  const pathname = usePathname();
-
   const { isAuthenticated } = useSelector(
     (appState: AppState) => appState.auth,
   );
+
+  const { language, setLanguage } = useLanguage();
+  const currentLocale = language;
+
+  const handleLocaleChange = (locale: "en" | "ar") => {
+    setLanguage(locale);
+    toggleMenu();
+  };
+  const t = translations[language];
 
   return (
     <>
@@ -82,13 +91,21 @@ export default function Navbar() {
               <li>
                 <FontAwesomeIcon icon={faPhone} />
 
-                <a href="tel:">+1 (800) 123-4567</a>
+                <a href="tel:+18001234567" dir="ltr" className="inline-block">
+                  +1 (800) 123-4567
+                </a>
               </li>
 
               <li>
                 <FontAwesomeIcon icon={faEnvelope} />
 
-                <a href="mailto:support@freshcart.com">support@freshcart.com</a>
+                <a
+                  href="mailto:support@freshcart.com"
+                  dir="ltr"
+                  className="inline-block"
+                >
+                  support@freshcart.com
+                </a>
               </li>
             </ul>
 
@@ -116,10 +133,15 @@ export default function Navbar() {
               </li>
 
               <li>
-                <select>
-                  <option value="ar">العربـية</option>
-
+                <select
+                  value={language}
+                  className="cursor-pointer bg-transparent outline-none"
+                  onChange={(e) => {
+                    setLanguage(e.target.value as "en" | "ar");
+                  }}
+                >
                   <option value="en">English</option>
+                  <option value="ar">العربية</option>
                 </select>
               </li>
             </ul>
@@ -137,13 +159,13 @@ export default function Navbar() {
             <search className="relative hidden lg:block">
               <input
                 type="text"
-                placeholder="Search for products"
-                className=" min-w-64  form-control"
+                placeholder={t.searchPlaceholder}
+                className="min-w-64 form-control pe-10 pe-4 ps-12 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500/30"
               />
 
               <FontAwesomeIcon
                 icon={faMagnifyingGlass}
-                className="absolute right-2 top-1/2 -translate-1/2"
+                className="absolute end-4 top-1/2 -translate-y-1/2 text-gray-400"
               />
             </search>
 
@@ -160,7 +182,7 @@ export default function Navbar() {
                     </span>
                   </div>
 
-                  <span className="text-sm">Wishlist</span>
+                  <span className="text-sm">{t.wishlist}</span>
                 </Link>
               </li>
 
@@ -180,7 +202,7 @@ export default function Navbar() {
                     </span>
                   </div>
 
-                  <span className="text-sm">Cart</span>
+                  <span className="text-sm">{t.cart}</span>
                 </Link>
               </li>
 
@@ -191,7 +213,7 @@ export default function Navbar() {
                 >
                   <FontAwesomeIcon className="text-xl" icon={faUser} />
 
-                  <span className="text-sm">Account</span>
+                  <span className="text-sm">{t.account}</span>
                 </Link>
               </li>
 
@@ -202,7 +224,7 @@ export default function Navbar() {
                 >
                   <FontAwesomeIcon className="text-xl" icon={faSignOutAlt} />
 
-                  <span className="text-sm">Logout</span>
+                  <span className="text-sm">{t.logout}</span>
                 </li>
               ) : (
                 <>
@@ -213,7 +235,7 @@ export default function Navbar() {
                     >
                       <FontAwesomeIcon className="text-xl" icon={faUserPlus} />
 
-                      <span className="text-sm">Sign up</span>
+                      <span className="text-sm">{t.signup}</span>
                     </Link>
                   </li>
 
@@ -227,7 +249,7 @@ export default function Navbar() {
                         icon={faAddressCard}
                       />
 
-                      <span className="text-sm">Login</span>
+                      <span className="text-sm">{t.login}</span>
                     </Link>
                   </li>
                 </>
@@ -326,8 +348,17 @@ export default function Navbar() {
             ></div>
 
             <div
-              className={`offcanvas space-y-5 fixed z-40 bg-white top-0 bottom-0 p-3 w-80 
-            ${isClosing ? "animate-slide-out" : "animate-slide-in"}`}
+              className={`offcanvas space-y-5 fixed z-40 bg-white top-0 bottom-0 p-3 w-80
+  ${currentLocale === "ar" ? "right-0" : "left-0"}
+  ${
+    isClosing
+      ? currentLocale === "ar"
+        ? "animate-slide-out-rtl"
+        : "animate-slide-out"
+      : currentLocale === "ar"
+        ? "animate-slide-in-rtl"
+        : "animate-slide-in"
+  }`}
             >
               <div className="flex justify-between items-center border-b border-gray-300/50 mt-4 pb-4">
                 <Link onClick={toggleMenu} href="/">
@@ -335,7 +366,17 @@ export default function Navbar() {
                 </Link>
 
                 <button
-                  className="btn bg-primary-500 hover:bg-primary-600 text-white rounded-full py-1 px-2"
+                  className="
+w-9 h-9
+rounded-full
+flex items-center justify-center
+bg-primary-500
+hover:bg-primary-600
+text-white
+shadow-sm
+transition-all duration-200
+hover:scale-105
+"
                   onClick={toggleMenu}
                 >
                   <FontAwesomeIcon icon={faXmark} />
@@ -345,18 +386,18 @@ export default function Navbar() {
               <search className="relative ">
                 <input
                   type="text"
-                  placeholder="Search for products"
-                  className=" min-w-74 form-control"
+                  placeholder={t.searchPlaceholder}
+                  className="min-w-74 form-control pe-10 ps-4"
                 />
 
                 <FontAwesomeIcon
                   icon={faMagnifyingGlass}
-                  className="absolute right-2 top-1/2 -translate-1/2"
+                  className="absolute end-4 top-1/2 -translate-1/2"
                 />
               </search>
 
               <div>
-                <h2 className="text-xl font-bold">Main Menu</h2>
+                <h2 className="text-xl font-bold"> {t.mainMenu}</h2>
 
                 <ul className="  *:hover:bg-gray-100 *:rounded-lg transition-colors duration-s00 space-y-2 mt-3">
                   <li>
@@ -374,7 +415,7 @@ export default function Navbar() {
                         </span>
                       </div>
 
-                      <span className="text-sm">Wishlist</span>
+                      <span className="text-sm">{t.wishlist}</span>
                     </Link>
                   </li>
 
@@ -398,7 +439,7 @@ export default function Navbar() {
                         </span>
                       </div>
 
-                      <span className="text-sm">Cart</span>
+                      <span className="text-sm">{t.cart}</span>
                     </Link>
                   </li>
 
@@ -407,26 +448,26 @@ export default function Navbar() {
                       onClick={toggleMenu}
                       className={`${pathname === "/account" ? "text-primary-600 rounded-lg  bg-primary-100 " : ""} 
 
-                  flex  items-center gap-2  transition-colors duration-200 px-2 py-3`}
+                  flex  items-center gap-2  transition-colors duration-200 px-3 py-3.5`}
                       href="/account"
                     >
                       <FontAwesomeIcon className="text-xl" icon={faUser} />
 
-                      <span className="text-sm">Account</span>
+                      <span className="text-sm">{t.account}</span>
                     </Link>
                   </li>
                 </ul>
               </div>
 
               <div className="border-t border-gray-300/50 pt-5">
-                <h2 className="text-xl font-bold"> Account</h2>
+                <h2 className="text-xl font-bold">{t.accountMenu}</h2>
 
-                <ul className="  *:hover:bg-gray-100 *:rounded-lg transition-colors duration-s00 space-y-2 mt-3">
+                <ul className="  *:hover:bg-gray-100 *:rounded-lg transition-colors duration-s00 space-y-3 mt-4">
                   {isAuthenticated ? (
                     <li
-                      className={` cursor-pointer   flex items-center gap-2
+                      className={` cursor-pointer   flex items-center gap-3
 
-                    transition-colors duration-200 px-2 py-3`}
+                    transition-colors duration-200 px-3 py-3.5`}
                       onClick={() => {
                         logout();
                         toggleMenu();
@@ -437,7 +478,7 @@ export default function Navbar() {
                         icon={faSignOutAlt}
                       />
 
-                      <span className="text-sm">Logout</span>
+                      <span className="text-sm">{t.logout}</span>
                     </li>
                   ) : (
                     <>
@@ -446,7 +487,7 @@ export default function Navbar() {
                           onClick={toggleMenu}
                           className={`${pathname === "/signup" ? "text-primary-600 rounded-lg bg-primary-100" : ""} 
 
-                  flex  items-center gap-2 transition-colors duration-200 px-2 py-3`}
+                  flex  items-center gap-2 transition-colors duration-200 px-3 py-3.5`}
                           href="/signup"
                         >
                           <FontAwesomeIcon
@@ -454,7 +495,7 @@ export default function Navbar() {
                             icon={faUserPlus}
                           />
 
-                          <span className="text-sm">Sign up</span>
+                          <span className="text-sm">{t.signup}</span>
                         </Link>
                       </li>
 
@@ -463,7 +504,7 @@ export default function Navbar() {
                           onClick={toggleMenu}
                           className={`${pathname === "/login" ? "text-primary-600 rounded-lg bg-primary-100" : ""} 
 
-                  flex  items-center gap-2  transition-colors duration-200 px-2 py-3`}
+                  flex  items-center gap-2  transition-colors duration-200 px-3 py-3.5`}
                           href="/login"
                         >
                           <FontAwesomeIcon
@@ -471,12 +512,43 @@ export default function Navbar() {
                             icon={faAddressCard}
                           />
 
-                          <span className="text-sm">Login</span>
+                          <span className="text-sm">{t.login}</span>
                         </Link>
                       </li>
                     </>
                   )}
                 </ul>
+              </div>
+              <div className="border-t border-gray-200 pt-5 mt-5">
+                <h2 className="text-lg font-semibold mb-3">
+                  {t.languageLabel}
+                </h2>
+
+                <div className="grid grid-cols-2 gap-2 rounded-2xl bg-gray-100 p-1">
+                  <button
+                    onClick={() => handleLocaleChange("en")}
+                    className={`rounded-xl py-3 text-sm font-medium transition-all duration-200 flex items-center justify-center gap-2
+${
+  currentLocale === "en"
+    ? "bg-white text-primary-600 shadow-sm"
+    : "text-gray-600 hover:text-primary-600"
+}`}
+                  >
+                    English US
+                  </button>
+
+                  <button
+                    onClick={() => handleLocaleChange("ar")}
+                    className={`rounded-xl py-3 text-sm font-medium transition-all duration-200 flex items-center justify-center gap-2
+${
+  currentLocale === "ar"
+    ? "bg-white text-primary-600 shadow-sm"
+    : "text-gray-600 hover:text-primary-600"
+}`}
+                  >
+                    EG العربية
+                  </button>
+                </div>
               </div>
             </div>
           </>

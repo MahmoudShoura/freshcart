@@ -117,3 +117,24 @@ export async function mergeGuestCartAfterLogin(
 
   return await getLoggedUserCart();
 }
+
+export async function clearLoggedUserCart(): Promise<void> {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value || null;
+
+  if (!token) {
+    throw new Error("Authentication required");
+  }
+
+  try {
+    await axios.request({
+      url: "https://ecommerce.routemisr.com/api/v1/cart",
+      method: "DELETE",
+      headers: {
+        token,
+      },
+    });
+  } catch (error) {
+    throw error;
+  }
+}
