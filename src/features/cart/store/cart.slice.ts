@@ -47,23 +47,34 @@ const cartSlice = createSlice({
       state.totalCartPrice = action.payload.data.totalCartPrice;
     },
 
-    addGuestCartItem(state, action: PayloadAction<{ productId: string }>) {
-      const { productId } = action.payload;
-
-      if (!state.guestCart) {
-        state.guestCart = [];
-      }
+    addGuestCartItem(
+      state,
+      action: PayloadAction<{
+        productId: string;
+        title?: string;
+        imageCover?: string;
+        price?: number;
+        category?: {
+          name: string;
+        };
+      }>,
+    ) {
+      const payload = action.payload;
 
       const existingItem = state.guestCart.find(
-        (item) => item.productId === productId,
+        (item) => item.productId === payload.productId,
       );
 
       if (existingItem) {
         existingItem.quantity += 1;
       } else {
         state.guestCart.push({
-          productId,
+          productId: payload.productId,
           quantity: 1,
+          title: payload.title,
+          imageCover: payload.imageCover,
+          price: payload.price,
+          category: payload.category,
         });
       }
 
@@ -74,7 +85,6 @@ const cartSlice = createSlice({
         0,
       );
     },
-
     clearGuestCart(state) {
       state.guestCart = [];
     },

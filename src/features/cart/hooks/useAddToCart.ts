@@ -22,7 +22,9 @@ export function useAddToCart() {
           title: product.title,
           imageCover: product.imageCover,
           price: product.priceAfterDiscount || product.price,
-          category: product.category.name,
+          category: {
+            name: product.category.name,
+          },
         }),
       );
 
