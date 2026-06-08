@@ -14,11 +14,12 @@ export function useAddToCart() {
 
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
 
-  const handleAddToCart = async (product: Product) => {
+  const handleAddToCart = async (product: Product, quantity = 1) => {
     if (!isAuthenticated) {
       dispatch(
         addGuestCartItem({
           productId: product.id,
+          quantity,
           title: product.title,
           imageCover: product.imageCover,
           price: product.priceAfterDiscount || product.price,

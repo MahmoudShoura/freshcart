@@ -5,7 +5,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { Provider } from "react-redux";
 import { Bounce, ToastContainer } from "react-toastify";
 import { getCartFromStorage } from "@/features/cart/services/cart.service";
-import { addGuestCartItem } from "@/features/cart/store/cart.slice";
+import { hydrateGuestCart } from "@/features/cart/store/cart.slice";
 type ProviderProps = {
   children: ReactNode;
   preloadedState: PreloadedState;
@@ -14,20 +14,12 @@ type ProviderProps = {
 export default function Providers({ children, preloadedState }: ProviderProps) {
   const [store] = useState(() => createStore(preloadedState));
   useEffect(() => {
+    if (store.getState().auth.isAuthenticated) return;
+
     const guestCart = getCartFromStorage();
 
     if (guestCart.length > 0) {
-      guestCart.forEach((item) => {
-        store.dispatch(
-          addGuestCartItem({
-            productId: item.productId,
-            title: item.title,
-            imageCover: item.imageCover,
-            price: item.price,
-            category: item.category,
-          }),
-        );
-      });
+      store.dispatch(hydrateGuestCart(guestCart));
     }
   }, [store]);
   return (

@@ -66,6 +66,23 @@ export default function ProductInfo({ product }: { product: Product }) {
   const { handleAddToCart } = useAddToCart();
   const { wishlistIds } = useAppSelector((state) => state.wishlist);
   const isInWishlist = wishlistIds.includes(id);
+  const maxSelectableQuantity = Math.max(1, quantity);
+
+  function clampQuantity(value: number) {
+    if (!Number.isFinite(value)) return 1;
+
+    return Math.min(Math.max(1, value), maxSelectableQuantity);
+  }
+
+  async function handleProductAddToCart() {
+    setIsAddingToCart(true);
+
+    try {
+      await handleAddToCart(product, clampQuantity(count));
+    } finally {
+      setIsAddingToCart(false);
+    }
+  }
 
   async function handleAddToWishlist() {
     try {
@@ -242,7 +259,7 @@ export default function ProductInfo({ product }: { product: Product }) {
                       disabled={count <= 1}
                       onClick={() => {
                         if (count > 1) {
-                          setCount(count - 1);
+                          setCount(clampQuantity(count - 1));
                         }
                       }}
                       className="px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-primary-600 transition disabled:opacity-10"
@@ -252,9 +269,10 @@ export default function ProductInfo({ product }: { product: Product }) {
                     <input
                       type="number"
                       min={1}
+                      max={maxSelectableQuantity}
                       value={count}
                       onChange={(e) => {
-                        setCount(+e.target.value);
+                        setCount(clampQuantity(Number(e.target.value)));
                       }}
                       className="w-16 text-center border-0 focus:outline-none  text-lg  font-medium"
                       id="quantity"
@@ -262,8 +280,9 @@ export default function ProductInfo({ product }: { product: Product }) {
 
                     <button
                       id="increase-qty"
+                      disabled={quantity <= 0 || count >= maxSelectableQuantity}
                       onClick={() => {
-                        setCount(count + 1);
+                        setCount(clampQuantity(count + 1));
                       }}
                       className="px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-primary-600 transition disabled:opacity-10"
                     >
@@ -296,8 +315,8 @@ export default function ProductInfo({ product }: { product: Product }) {
               <div className="flex flex-col sm:flex-row gap-4 mb-6">
                 <button
                   id="add-to-cart"
-                  onClick={() => handleAddToCart(product)}
-                  disabled={isAddingToCart}
+                  onClick={handleProductAddToCart}
+                  disabled={isAddingToCart || quantity <= 0}
                   className="flex-1 text-white py-4 px-6 rounded-xl font-medium bg-primary-600 hover:bg-primary-700 hover:shadow-md cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-300"
                 >
                   {isAddingToCart ? (
