@@ -1,18 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const protectedRoutes = [
-  "/cart",
-  "/checkout",
-  "/orders",
-  "/wishlist",
-  "/profile",
-];
+const protectedRoutes = ["/checkout", "/orders", "/wishlist", "/profile"];
 
 const AuthRoutes = [
   "/login",
   "/signup",
   "/forgotten-password",
-  "/reset-forgotten-password"
+  "/reset-forgotten-password",
 ];
 
 export function proxy(request: NextRequest) {
