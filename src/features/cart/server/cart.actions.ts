@@ -107,11 +107,24 @@ export async function updateProductQuantity(
 export async function mergeGuestCartAfterLogin(
   items: { productId: string; quantity: number }[],
 ) {
+  const currentCart = await getLoggedUserCart();
+  const existingCounts = new Map(
+    currentCart.data.products.map((item) => [item.product.id, item.count]),
+  );
+
   for (const item of items) {
-    for (let i = 0; i < item.quantity; i++) {
+    const quantity = Math.max(1, item.quantity);
+    const existingCount = existingCounts.get(item.productId) || 0;
+    const nextCount = existingCount + quantity;
+
+    if (existingCount === 0) {
       await addProductToCart({
         productId: item.productId,
       });
+    }
+
+    if (nextCount > 1) {
+      await updateProductQuantity(item.productId, nextCount);
     }
   }
 

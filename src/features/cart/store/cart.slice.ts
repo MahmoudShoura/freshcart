@@ -6,7 +6,6 @@ import {
 import { CartResponse } from "./../types/cart.types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CartItem } from "../types/cart.types";
-import { removeProductFromCart } from "../server/cart.actions";
 
 export interface CartState {
   numberOfCartItems: number;
@@ -136,8 +135,6 @@ const cartSlice = createSlice({
     },
     clearGuestCart(state) {
       state.guestCart = [];
-      state.numberOfCartItems = 0;
-      state.totalCartPrice = 0;
     },
 
     removeProduct: function (state, action: PayloadAction<{ id: string }>) {
