@@ -35,10 +35,14 @@ export async function changePasswordAction(values: {
       success: false,
       message: data.message || "Failed to change password",
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = axios.isAxiosError<{ message?: string }>(error)
+      ? error.response?.data?.message
+      : undefined;
+
     return {
       success: false,
-      message: error.response?.data?.message || "Something went wrong",
+      message: errorMessage || "Something went wrong",
     };
   }
 }

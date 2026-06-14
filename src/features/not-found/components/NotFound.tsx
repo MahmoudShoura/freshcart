@@ -35,11 +35,11 @@ export default async function NotFound() {
         </h2>
 
         <p className="text-gray-500 mt-3">
-          The page you're looking for seems to have gone shopping!
+          The page you&apos;re looking for seems to have gone shopping!
         </p>
 
         <p className="text-gray-400">
-          Don't worry, our fresh products are still available for you.
+          Don&apos;t worry, our fresh products are still available for you.
         </p>
 
         {/* Buttons */}

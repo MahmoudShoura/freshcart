@@ -25,7 +25,7 @@ export default function PaymentMethods({
           Payment Method
         </h2>
         <p className="text-primary-100 text-sm mt-1">
-          Choose how you'd like to pay
+          Choose how you&apos;d like to pay
         </p>
       </div>
 

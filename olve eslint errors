@@ -1,0 +1,19 @@
+warning: in the working copy of 'src/app/layout.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/context/language.context.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/features/auth/components/resetForgottenPassword/ResetForgottenPassword.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/features/auth/components/resetForgottenPassword/StartResetForgottenPassword.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/features/changePassword/server/changePassword.actions.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/features/checkout/components/PaymentMethods.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/features/contact/components/ContactInfo.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/features/not-found/components/NotFound.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/features/orders/screens/orders.screen.tsx', LF will be replaced by CRLF the next time Git touches it
+ src/app/layout.tsx                                 |  2 [32m+[m[31m-[m
+ src/context/language.context.tsx                   | 26 [32m++++++++++[m[31m----------[m
+ .../ResetForgottenPassword.tsx                     |  8 [32m+++++[m[31m--[m
+ .../StartResetForgottenPassword.tsx                | 28 [32m+++++++++++++[m[31m---------[m
+ .../server/changePassword.actions.ts               |  8 [32m+++++[m[31m--[m
+ .../checkout/components/PaymentMethods.tsx         |  2 [32m+[m[31m-[m
+ src/features/contact/components/ContactInfo.tsx    |  4 [32m++[m[31m--[m
+ src/features/not-found/components/NotFound.tsx     |  4 [32m++[m[31m--[m
+ src/features/orders/screens/orders.screen.tsx      |  2 [32m+[m[31m-[m
+ 9 files changed, 50 insertions(+), 34 deletions(-)

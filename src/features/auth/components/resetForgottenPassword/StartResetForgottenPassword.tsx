@@ -1,10 +1,10 @@
 "use client";
 import {
   faEnvelope,
-  faLock,
+  
   faPaperPlane,
   faShieldAlt,
-  faKey,
+  
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -48,17 +48,21 @@ export default function StartResetForgottenPassword() {
          
         }
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const axiosError = axios.isAxiosError<{ message?: string }>(error)
+        ? error
+        : null;
+
       console.error("Forgot password error info:", {
-        status: error.response?.status,
-        data: error.response?.data,
-        message: error.message
+        status: axiosError?.response?.status,
+        data: axiosError?.response?.data,
+        message: axiosError?.message
       });
 
-      const Messagefromserver = error.response?.data?.message;
+      const Messagefromserver = axiosError?.response?.data?.message;
       
      
-      if (error.response?.status === 404 || !Messagefromserver) {
+      if (axiosError?.response?.status === 404 || !Messagefromserver) {
         try {
           
           const fallbackRes = await axios.post(
@@ -75,7 +79,7 @@ export default function StartResetForgottenPassword() {
         }
       }
 
-      const finalMsg = Messagefromserver || error.message || "Something went wrong";
+      const finalMsg = Messagefromserver || axiosError?.message || "Something went wrong";
       toast.error(finalMsg);
     } finally {
       setIsLoading(false);
@@ -105,9 +109,11 @@ export default function StartResetForgottenPassword() {
       } else {
         toast.error(data.message || "Invalid OTP");
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("OTP verification error:", error);
-      const errorMessage = error.response?.data?.message || error.message || "Invalid OTP";
+      const errorMessage = axios.isAxiosError<{ message?: string }>(error)
+        ? error.response?.data?.message || error.message
+        : "Invalid OTP";
       toast.error(errorMessage);
     } finally {
       setIsLoading(false);

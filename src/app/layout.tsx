@@ -18,7 +18,7 @@ const exo = Exo({
   variable: "--font-exo",
 });
 
-let defaultCartState: CartState = {
+const defaultCartState: CartState = {
   cartId: null,
   numberOfCartItems: 0,
   totalCartPrice: 0,

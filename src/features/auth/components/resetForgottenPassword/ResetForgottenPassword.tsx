@@ -41,8 +41,12 @@ export default function ResetForgottenPassword() {
 
       toast.success("Password reset successfully. Please login with your new password.");
       router.push("/login");
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || "Failed to reset password");
+    } catch (error: unknown) {
+      const errorMessage = axios.isAxiosError<{ message?: string }>(error)
+        ? error.response?.data?.message
+        : undefined;
+
+      toast.error(errorMessage || "Failed to reset password");
     } finally {
       setIsLoading(false);
     }

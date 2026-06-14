@@ -17,25 +17,27 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | null>(null);
 
+function getInitialLanguage(): Language {
+  if (typeof window === "undefined") return "en";
+
+  const savedLanguage = localStorage.getItem("freshcart-language");
+
+  return savedLanguage === "en" || savedLanguage === "ar"
+    ? savedLanguage
+    : "en";
+}
+
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<Language>("en");
+  const [language, setLanguageState] = useState<Language>(getInitialLanguage);
 
   useEffect(() => {
-    const savedLanguage = localStorage.getItem("freshcart-language");
-
-    if (savedLanguage === "en" || savedLanguage === "ar") {
-      setLanguageState(savedLanguage);
-      document.documentElement.lang = savedLanguage;
-      document.documentElement.dir = savedLanguage === "ar" ? "rtl" : "ltr";
-    }
-  }, []);
+    document.documentElement.lang = language;
+    document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
+  }, [language]);
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
     localStorage.setItem("freshcart-language", lang);
-
-    document.documentElement.lang = lang;
-    document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
   };
 
   return (

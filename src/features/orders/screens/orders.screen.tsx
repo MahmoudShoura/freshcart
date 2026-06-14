@@ -50,7 +50,7 @@ export default function OrdersScreen() {
             No orders yet
           </h2>
           <p className="text-gray-500 mb-8 text-sm leading-relaxed">
-            When you place orders, they'll appear here <br /> so you can track
+            When you place orders, they&apos;ll appear here <br /> so you can track
             them.
           </p>
           <Link
