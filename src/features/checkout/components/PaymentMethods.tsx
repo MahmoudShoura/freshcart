@@ -6,6 +6,7 @@ import {
   faShieldAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
 
 interface paymentMethodsProps {
   selectedMethod: "cash" | "card";
@@ -91,22 +92,31 @@ export default function PaymentMethods({
             <p>Secure payment with Credit/Debit Card via Stripe</p>
 
             <div className="flex items-center gap-2 mt-2">
-              <img
-                src="http://img.icons8.com/color/48/visa.png"
+              <Image
+                src="https://img.icons8.com/color/48/visa.png"
                 alt="Visa"
-                className="h-5"
+                width={48}
+                height={48}
+                unoptimized
+                className="h-5 w-auto"
               />
 
-              <img
-                src="http://img.icons8.com/color/48/mastercard.png"
+              <Image
+                src="https://img.icons8.com/color/48/mastercard.png"
                 alt="Mastercard"
-                className="h-5"
+                width={48}
+                height={48}
+                unoptimized
+                className="h-5 w-auto"
               />
 
-              <img
-                src="http://img.icons8.com/color/48/amex.png"
+              <Image
+                src="https://img.icons8.com/color/48/amex.png"
                 alt="Amex"
-                className="h-5"
+                width={48}
+                height={48}
+                unoptimized
+                className="h-5 w-auto"
               />
             </div>
           </div>
