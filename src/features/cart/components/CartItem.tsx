@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
+import Image from "next/image";
 import Swal from "sweetalert2";
 
 import { CartItem as CartItemType } from "../types/cart.types";
@@ -84,9 +85,12 @@ export default function CartItem({ info }: { info: CartItemType }) {
             {/* Product Image */}
             <Link href={`/products/${id} `} className="relative shrink-0 group">
               <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-xl bg-linear-to-br from-gray-50 via-white to-gray-100 p-3 hover:scale-110 transition-transform duration-500 ">
-                <img
+                <Image
                   src={imageCover}
                   alt={title}
+                  width={112}
+                  height={112}
+                  unoptimized
                   className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-110"
                 />
               </div>

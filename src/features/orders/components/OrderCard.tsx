@@ -17,6 +17,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Order } from "../server/orders.types";
 import { useState } from "react";
+import Image from "next/image";
 
 export default function OrderCard({ orderInfo }: { orderInfo: Order }) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -74,9 +75,12 @@ export default function OrderCard({ orderInfo }: { orderInfo: Order }) {
           <div className="relative shrink-0">
             <div className="w-32 h-32 sm:w-36 sm:h-36 rounded-2xl bg-gray-50 border border-gray-100 flex items-center justify-center">
               {orderInfo.cartItems[0] && (
-                <img
+                <Image
                   src={orderInfo.cartItems[0].product.imageCover}
                   alt=""
+                  width={144}
+                  height={144}
+                  unoptimized
                   className="w-full h-full object-contain"
                 />
               )}
@@ -221,9 +225,12 @@ export default function OrderCard({ orderInfo }: { orderInfo: Order }) {
                   className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-100"
                 >
                   <div className="w-16 h-16 rounded-xl bg-gray-50 p-2 shrink-0">
-                    <img
+                    <Image
                       src={item.product.imageCover}
                       alt={item.product.title}
+                      width={64}
+                      height={64}
+                      unoptimized
                       className="w-full h-full object-contain"
                     />
                   </div>
