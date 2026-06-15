@@ -5,8 +5,12 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { changePasswordAction } from "@/features/changePassword/server/changePassword.actions";
 import { toast } from "react-toastify";
+import { useLanguage } from "@/context/language.context";
+import { translations } from "@/context/translations";
 
 export default function ChangePassword() {
+  const { language } = useLanguage();
+  const t = translations[language];
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -59,33 +63,34 @@ export default function ChangePassword() {
           className="w-full max-w-4xl bg-white rounded-2xl shadow-sm border border-gray-100 p-10"
         >
           <h2 className="text-2xl font-semibold text-gray-800 mb-2">
-            Change Password
+            {t.changePassword}
           </h2>
           <p className="text-gray-500 text-sm mb-6">
-            Keep your account secure by using a strong password.
+            {t.changePasswordSubtitle}
           </p>
 
           <div className="space-y-6 py-8">
             {/* Current Password */}
             <div>
               <label className="block text-sm font-medium text-gray-600 mb-2">
-                Current Password
+                {t.currentPassword}
               </label>
 
-              <div className="relative">
+              <div className="relative" dir="ltr">
                 <input
                   type={showCurrentPassword ? "text" : "password"}
                   value={currentPassword}
                   onChange={(e) => setCurrentPassword(e.target.value)}
                   placeholder="Enter current password"
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3 pr-12 focus:ring-2 focus:ring-green-500 focus:outline-none"
+                  className="w-full border border-gray-300 rounded-lg ps-4 pe-16 py-3 text-left focus:ring-2 focus:ring-green-500 focus:outline-none"
+                  dir="ltr"
                   required
                 />
 
                 <button
                   type="button"
                   onClick={() => setShowCurrentPassword(!showCurrentPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition"
+                  className="absolute end-5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition"
                 >
                   <FontAwesomeIcon icon={faEye} />
                 </button>
@@ -95,23 +100,24 @@ export default function ChangePassword() {
             {/* New Password */}
             <div>
               <label className="block text-sm font-medium text-gray-600 mb-2">
-                New Password
+                {t.newPassword}
               </label>
 
-              <div className="relative">
+              <div className="relative" dir="ltr">
                 <input
                   type={showNewPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter new password"
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3 pr-12 focus:ring-2 focus:ring-green-500 focus:outline-none"
+                  className="w-full border border-gray-300 rounded-lg ps-4 pe-16 py-3 text-left focus:ring-2 focus:ring-green-500 focus:outline-none"
+                  dir="ltr"
                   required
                 />
 
                 <button
                   type="button"
                   onClick={() => setShowNewPassword(!showNewPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition"
+                  className="absolute end-5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition"
                 >
                   <FontAwesomeIcon icon={faEye} />
                 </button>
@@ -121,23 +127,24 @@ export default function ChangePassword() {
             {/* Confirm Password */}
             <div>
               <label className="block text-sm font-medium text-gray-600 mb-2">
-                Confirm New Password
+                {t.confirmNewPassword}
               </label>
 
-              <div className="relative">
+              <div className="relative" dir="ltr">
                 <input
                   type={showConfirmPassword ? "text" : "password"}
                   value={rePassword}
                   onChange={(e) => setRePassword(e.target.value)}
                   placeholder="Confirm new password"
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3 pr-12 focus:ring-2 focus:ring-green-500 focus:outline-none"
+                  className="w-full border border-gray-300 rounded-lg ps-4 pe-16 py-3 text-left focus:ring-2 focus:ring-green-500 focus:outline-none"
+                  dir="ltr"
                   required
                 />
 
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition"
+                  className="absolute end-5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition"
                 >
                   <FontAwesomeIcon icon={faEye} />
                 </button>
@@ -156,7 +163,7 @@ export default function ChangePassword() {
               }}
               className="px-6 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100 transition"
             >
-              Cancel
+              {t.cancel}
             </button>
 
             <button
@@ -164,7 +171,7 @@ export default function ChangePassword() {
               disabled={isLoading}
               className="px-6 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 transition font-medium disabled:bg-gray-400"
             >
-              {isLoading ? "Updating..." : "Update Password"}
+              {isLoading ? t.updating : t.updatePassword}
             </button>
           </div>
         </form>

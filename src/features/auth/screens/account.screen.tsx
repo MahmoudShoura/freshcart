@@ -1,6 +1,8 @@
 "use client";
 
 import ChangePassword from "@/components/changePassword/ChangePassword";
+import { useLanguage } from "@/context/language.context";
+import { translations } from "@/context/translations";
 import { useAppSelector } from "@/store/store";
 import {
   faCamera,
@@ -79,6 +81,8 @@ function getInitialPreferences(displayName: string): ProfilePreferences {
 
 export default function AccountScreen() {
   const { userInfo } = useAppSelector((state) => state.auth);
+  const { language } = useLanguage();
+  const t = translations[language];
   const [avatarPreview, setAvatarPreview] = useState<string | null>(
     getInitialAvatar,
   );
@@ -126,7 +130,7 @@ export default function AccountScreen() {
     const nextDisplayName = profilePreferences.displayName.trim();
 
     if (!nextDisplayName) {
-      toast.error("Display name is required");
+      toast.error(t.displayNameRequired);
       return;
     }
 
@@ -143,7 +147,7 @@ export default function AccountScreen() {
       PROFILE_PREFERENCES_KEY,
       JSON.stringify(preferencesToSave),
     );
-    toast.success("Profile preferences saved");
+    toast.success(t.profilePreferencesSaved);
   }
 
   function handleResetPreferences() {
@@ -151,7 +155,7 @@ export default function AccountScreen() {
 
     setProfilePreferences(defaultPreferences);
     localStorage.removeItem(PROFILE_PREFERENCES_KEY);
-    toast.success("Profile preferences reset");
+    toast.success(t.profilePreferencesReset);
   }
 
   function clearAvatarInput() {
@@ -193,15 +197,13 @@ export default function AccountScreen() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">My Account</h1>
-          <p className="text-gray-500 mt-2">
-            Manage your account details and shopping activity.
-          </p>
+          <h1 className="text-3xl font-bold text-gray-900">{t.myAccount}</h1>
+          <p className="text-gray-500 mt-2">{t.accountSubtitle}</p>
         </div>
 
         <span className="inline-flex items-center gap-2 self-start sm:self-auto rounded-full bg-green-50 px-4 py-2 text-sm font-semibold text-green-700 border border-green-100">
           <FontAwesomeIcon icon={faCheckCircle} className="text-green-600" />
-          Active Account
+          {t.activeAccount}
         </span>
       </div>
 
@@ -226,13 +228,19 @@ export default function AccountScreen() {
                 </div>
               </div>
 
-              <div className="min-w-0 flex-1 text-center md:text-left">
+              <div className="min-w-0 flex-1 text-center md:text-start">
                 <h2 className="text-3xl font-bold truncate">{displayName}</h2>
                 <p className="text-primary-100 mt-2 text-base">
-                  Your FreshCart account dashboard
+                  {t.accountDashboardSubtitlePrefix}{" "}
+                  <span dir="ltr" className="inline-block">
+                    FreshCart
+                  </span>
+                  {t.accountDashboardSubtitleSuffix
+                    ? ` ${t.accountDashboardSubtitleSuffix}`
+                    : ""}
                 </p>
 
-                <div className="flex flex-wrap justify-center md:justify-start gap-3 mt-5 text-sm">
+                <div className="flex flex-wrap justify-center md:justify-start rtl:md:justify-end gap-3 mt-5 text-sm">
                   <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1.5 capitalize">
                     <FontAwesomeIcon icon={faShieldHalved} />
                     {userRole}
@@ -249,10 +257,10 @@ export default function AccountScreen() {
                   ))}
                 </div>
 
-                <div className="mt-5 flex flex-wrap justify-center md:justify-start gap-2">
+                <div className="mt-5 flex flex-wrap justify-center md:justify-start rtl:md:justify-end gap-2">
                   <label className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-primary-700 hover:bg-primary-50 transition shadow-sm">
                     <FontAwesomeIcon icon={faCamera} />
-                    Change photo
+                    {t.changePhoto}
                     <input
                       ref={fileInputRef}
                       type="file"
@@ -269,14 +277,14 @@ export default function AccountScreen() {
                       className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm font-semibold text-white hover:bg-white/25 transition"
                     >
                       <FontAwesomeIcon icon={faTrash} />
-                      Remove photo
+                      {t.removePhoto}
                     </button>
                   )}
                 </div>
 
                 {avatarPreview && (
                   <p className="mt-3 text-xs font-medium text-primary-100">
-                    Saved on this device
+                    {t.savedOnDevice}
                   </p>
                 )}
               </div>
@@ -288,11 +296,10 @@ export default function AccountScreen() {
           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-5">
             <div>
               <h2 className="text-lg font-bold text-gray-900">
-                Profile Preferences
+                {t.profilePreferences}
               </h2>
               <p className="text-sm text-gray-500 mt-1">
-                Manage your local profile preferences and choose what appears in
-                your account header.
+                {t.profilePreferencesSubtitle}
               </p>
             </div>
           </div>
@@ -300,7 +307,7 @@ export default function AccountScreen() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-600 mb-2">
-                Display name
+                {t.displayName}
               </label>
               <input
                 type="text"
@@ -314,7 +321,7 @@ export default function AccountScreen() {
 
             <div>
               <label className="block text-sm font-medium text-gray-600 mb-2">
-                Family name
+                {t.familyName}
               </label>
               <input
                 type="text"
@@ -328,10 +335,11 @@ export default function AccountScreen() {
 
             <div>
               <label className="block text-sm font-medium text-gray-600 mb-2">
-                Phone number
+                {t.phoneNumber}
               </label>
               <input
                 type="tel"
+                dir="ltr"
                 value={profilePreferences.phoneNumber}
                 onChange={(event) =>
                   updatePreferenceField("phoneNumber", event.target.value)
@@ -343,11 +351,11 @@ export default function AccountScreen() {
             <div>
               <div className="flex items-center justify-between gap-4 mb-2">
                 <label className="block text-sm font-medium text-gray-600">
-                  City
+                  {t.city}
                 </label>
 
                 <label className="inline-flex items-center gap-2 text-xs text-gray-500">
-                  <span>Show in header</span>
+                  <span>{t.showInHeader}</span>
                   <input
                     type="checkbox"
                     checked={profilePreferences.visibility.city}
@@ -356,7 +364,7 @@ export default function AccountScreen() {
                     }
                     className="peer sr-only"
                   />
-                  <span className="relative h-5 w-9 rounded-full bg-gray-200 transition peer-checked:bg-primary-600 after:absolute after:left-0.5 after:top-0.5 after:h-4 after:w-4 after:rounded-full after:bg-white after:transition peer-checked:after:translate-x-4"></span>
+                  <span className="relative h-5 w-9 rounded-full bg-gray-200 transition peer-checked:bg-primary-600 after:absolute after:start-0.5 after:top-0.5 after:h-4 after:w-4 after:rounded-full after:bg-white after:transition peer-checked:after:translate-x-4 rtl:peer-checked:after:-translate-x-4"></span>
                 </label>
               </div>
 
@@ -372,8 +380,7 @@ export default function AccountScreen() {
           </div>
 
           <p className="text-xs text-gray-400 mt-4">
-            These preferences are saved only on this device. Avoid storing
-            highly sensitive information.
+            {t.preferencesPrivacyNote}
           </p>
 
           <div className="flex flex-col sm:flex-row sm:justify-end gap-3 mt-5">
@@ -382,7 +389,7 @@ export default function AccountScreen() {
               onClick={handleResetPreferences}
               className="px-5 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100 transition font-medium"
             >
-              Reset
+              {t.reset}
             </button>
 
             <button
@@ -390,7 +397,7 @@ export default function AccountScreen() {
               onClick={handleSavePreferences}
               className="px-5 py-2 rounded-lg bg-primary-600 text-white hover:bg-primary-700 transition font-medium"
             >
-              Save preferences
+              {t.savePreferences}
             </button>
           </div>
         </div>
@@ -403,10 +410,10 @@ export default function AccountScreen() {
 
             <div>
               <h2 className="text-xl font-bold text-gray-900">
-                Security Settings
+                {t.securitySettings}
               </h2>
               <p className="text-sm text-gray-500 mt-1">
-                Manage your password and keep your account protected.
+                {t.securitySettingsSubtitle}
               </p>
             </div>
           </div>

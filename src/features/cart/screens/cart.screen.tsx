@@ -93,9 +93,9 @@ export default function CartScreen() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8" dir="ltr">
             {/* Cart Items */}
-            <div className="lg:col-span-2">
+            <div className="lg:col-span-2" dir="auto">
               {/* Cart Items List */}
 
               <div className="space-y-4">
@@ -131,7 +131,7 @@ export default function CartScreen() {
                                   )}
                                 </div>
 
-                                <div className="absolute -bottom-1 -right-1 bg-green-500 text-white text-[10px] font-semibold px-2 py-0.5 rounded-full">
+                                <div className="absolute -bottom-1 -end-1 bg-green-500 text-white text-[10px] font-semibold px-2 py-0.5 rounded-full">
                                   <FontAwesomeIcon
                                     icon={faCheck}
                                     className="text-[8px]"
@@ -222,7 +222,7 @@ export default function CartScreen() {
                                   </div>
 
                                   <div className="flex items-center gap-4">
-                                    <div className="text-right">
+                                    <div className="text-end">
                                       <p className="text-sm text-gray-400 mb-0.5">
                                         Total
                                       </p>
@@ -283,7 +283,7 @@ export default function CartScreen() {
 
             {/* Order Summary */}
 
-            <div className="lg:col-span-1">
+            <div className="lg:col-span-1" dir="auto">
               <CartSummary
                 totalCartPrice={totalCartPrice}
                 numberOfCartItems={numberOfCartItems}

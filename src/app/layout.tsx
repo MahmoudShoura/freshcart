@@ -80,8 +80,8 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang="en">
-      <body className={`${exo.className} font-medium `}>
+    <html lang="en" dir="ltr" suppressHydrationWarning>
+      <body className={`${exo.className} font-medium`} suppressHydrationWarning>
         <Providers
           preloadedState={{
             auth: authValues,

@@ -111,15 +111,15 @@ export default function Navbar() {
 
             <ul className="flex gap-5 items-center">
               <li>
-                <Link href="/orders">Track Order</Link>
+                <Link href="/orders">{t.trackOrder}</Link>
               </li>
 
               <li>
-                <Link href="/about">About</Link>
+                <Link href="/about">{t.about}</Link>
               </li>
 
               <li>
-                <Link href="/contact">Contact</Link>
+                <Link href="/contact">{t.contact}</Link>
               </li>
 
               <li>
@@ -177,7 +177,7 @@ export default function Navbar() {
                 >
                   <div className="relative">
                     <FontAwesomeIcon className="text-xl " icon={faHeart} />
-                    <span className="absolute -right-3 top-0 -translate-y-1/2 size-5 flex justify-center items-center rounded-full bg-primary-600 text-white text-[11px] font-bold">
+                    <span className="absolute -end-3 top-0 -translate-y-1/2 size-5 flex justify-center items-center rounded-full bg-primary-600 text-white text-[11px] font-bold">
                       {wishlistIds.length}
                     </span>
                   </div>
@@ -197,7 +197,7 @@ export default function Navbar() {
                       icon={faCartShopping}
                     />
 
-                    <span className="absolute -right-3 top-0 -translate-y-1/2 size-5 flex justify-center items-center rounded-full bg-primary-600 text-white text-[11px] font-bold">
+                    <span className="absolute -end-3 top-0 -translate-y-1/2 size-5 flex justify-center items-center rounded-full bg-primary-600 text-white text-[11px] font-bold">
                       {numberOfCartItems}
                     </span>
                   </div>
@@ -280,7 +280,7 @@ export default function Navbar() {
               >
                 <FontAwesomeIcon icon={faBars} />
 
-                <span>All Categories</span>
+                <span>{t.allCategories}</span>
 
                 <FontAwesomeIcon icon={faChevronDown} />
               </button>
@@ -310,7 +310,7 @@ export default function Navbar() {
                       className="text-primary-600 text-xl"
                       icon={faEllipsis}
                     />
-                    <span>View All Categories </span>
+                    <span>{t.viewAllCategories}</span>
                   </Link>
                 </li>
               </menu>
@@ -318,20 +318,20 @@ export default function Navbar() {
 
             <ul className=" flex gap-5">
               <li>
-                <Link href="/">Home</Link>
+                <Link href="/">{t.home}</Link>
               </li>
               <li>
-                <Link href="/recently-added">Recently Added</Link>
+                <Link href="/recently-added">{t.recentlyAdded}</Link>
               </li>
               <li>
-                <Link href="/featured-products">Featured Products</Link>
+                <Link href="/featured-products">{t.featuredProducts}</Link>
               </li>
               <li>
-                <Link href="/offers">Offers</Link>
+                <Link href="/offers">{t.offers}</Link>
               </li>
               <li>
                 {" "}
-                <Link href="/brands">Brands</Link>
+                <Link href="/brands">{t.brands}</Link>
               </li>
             </ul>
           </div>
@@ -410,7 +410,7 @@ hover:scale-105
                     >
                       <div className="relative">
                         <FontAwesomeIcon className="text-xl " icon={faHeart} />
-                        <span className="absolute -right-3 top-0 -translate-y-1/2 size-5 flex justify-center items-center rounded-full bg-primary-600 text-white text-[11px] font-bold">
+                        <span className="absolute -end-3 top-0 -translate-y-1/2 size-5 flex justify-center items-center rounded-full bg-primary-600 text-white text-[11px] font-bold">
                           {wishlistIds.length}
                         </span>
                       </div>
@@ -432,7 +432,7 @@ hover:scale-105
                         />
 
                         <span
-                          className="absolute -right-3 top-0 -translate-y-1/2 size-5 flex justify-center items-center 
+                          className="absolute -end-3 top-0 -translate-y-1/2 size-5 flex justify-center items-center 
                                       rounded-full bg-primary-600 text-white text-[11px] font-bold"
                         >
                           {numberOfCartItems}

@@ -29,11 +29,15 @@ function getInitialLanguage(): Language {
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>(getInitialLanguage);
+  const direction = language === "ar" ? "rtl" : "ltr";
 
   useEffect(() => {
     document.documentElement.lang = language;
-    document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
-  }, [language]);
+    document.documentElement.dir = direction;
+    document.documentElement.dataset.language = language;
+    document.body.dir = direction;
+    document.body.dataset.language = language;
+  }, [direction, language]);
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
@@ -47,7 +51,14 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
         setLanguage,
       }}
     >
-      {children}
+      <div
+        lang={language}
+        dir={direction}
+        data-language={language}
+        suppressHydrationWarning
+      >
+        {children}
+      </div>
     </LanguageContext.Provider>
   );
 }

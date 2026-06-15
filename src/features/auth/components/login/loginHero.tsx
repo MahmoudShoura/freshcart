@@ -1,3 +1,7 @@
+"use client";
+
+import { useLanguage } from "@/context/language.context";
+import { translations } from "@/context/translations";
 import {
   faClock,
   faShieldHalved,
@@ -5,7 +9,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
+
 export default function LoginHero() {
+  const { language } = useLanguage();
+  const t = translations[language];
+
   return (
     <div className="block self-center pb-3 lg:pb-10">
       <div className="text-center space-y-4 md:space-y-6">
@@ -22,33 +30,39 @@ export default function LoginHero() {
 
         <div className="space-y-4">
           <h2 className="text-xl md:text-2xl font-bold text-gray-800 leading-snug">
-            FreshCart - Your One-Stop Shop for Fresh Products
+            <span dir="ltr" className="inline-block">
+              FreshCart
+            </span>{" "}
+            {t.loginHeroTitleSuffix}
           </h2>
           <p className="text-sm md:text-lg text-gray-600 max-w-md mx-auto">
-            Join thousands of happy customers who trust FreshCart for their
-            daily grocery needs
+            {t.loginHeroSubtitlePrefix}{" "}
+            <span dir="ltr" className="inline-block">
+              FreshCart
+            </span>{" "}
+            {t.loginHeroSubtitleSuffix}
           </p>
           <div className="hidden md:flex items-center justify-center gap-4 md:gap-8 text-xs md:text-sm text-gray-500 flex-wrap">
             <div className="flex items-center">
               <FontAwesomeIcon
                 icon={faTruck}
-                className="text-primary-600 mr-2"
+                className="text-primary-600 me-2"
               />
-              Free Delivery
+              {t.freeDelivery}
             </div>
             <div className="flex items-center">
               <FontAwesomeIcon
                 icon={faShieldHalved}
-                className="text-primary-600 mr-2"
+                className="text-primary-600 me-2"
               />
-              Secure Payment
+              {t.securePayment}
             </div>
             <div className="flex items-center">
               <FontAwesomeIcon
                 icon={faClock}
-                className="text-primary-600 mr-2"
+                className="text-primary-600 me-2"
               />
-              24/7 Support
+              {t.support}
             </div>
           </div>
         </div>

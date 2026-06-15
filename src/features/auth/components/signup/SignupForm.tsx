@@ -17,6 +17,8 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import PasswordStrengthChecker from "@/utils/PasswordStrengthChecker";
+import { useLanguage } from "@/context/language.context";
+import { translations } from "@/context/translations";
 
 const PROFILE_PREFERENCES_KEY = "freshcart-profile-preferences";
 
@@ -24,6 +26,9 @@ export default function SignupForm() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const { language } = useLanguage();
+  const t = translations[language];
+  const isArabic = language === "ar";
 
   const {
     register,
@@ -95,8 +100,8 @@ export default function SignupForm() {
   return (
     <div className="p-10 space-y-8 bg-white shadow-xl rounded-xl">
       <div className="text-center">
-        <h2 className="text-3xl font-semibold">Create Your Account</h2>
-        <p className="mt-1">Start your fresh journey with us today</p>
+        <h2 className="text-3xl font-semibold">{t.signupTitle}</h2>
+        <p className="mt-1">{t.signupSubtitle}</p>
       </div>
 
       <div className=" flex gap-2 *:flex *:items-center *:justify-center *:w-full *:gap-2 *:hover:bg-gray-100">
@@ -112,14 +117,14 @@ export default function SignupForm() {
       </div>
 
       <div className="relative w-full h-0.5 bg-gray-300/30">
-        <span className="absolute  bg-white px-4 left-1/2 top-1/2 -translate-1/2">
-          or
+        <span className="absolute bg-white px-4 start-1/2 top-1/2 -translate-1/2">
+          {t.or}
         </span>
       </div>
 
       <form className="space-y-7" onSubmit={handleSubmit(onSubmit)}>
         <div className="name flex flex-col gap-1">
-          <label htmlFor="name">Name</label>
+          <label htmlFor="name">{t.name}</label>
           <input
             className="form-control"
             type="text"
@@ -133,12 +138,12 @@ export default function SignupForm() {
         </div>
 
         <div className="family-name flex flex-col gap-1">
-          <label htmlFor="familyName">Family Name</label>
+          <label htmlFor="familyName">{t.familyName}</label>
           <input
             className="form-control"
             type="text"
             id="familyName"
-            placeholder="Optional profile preference"
+            placeholder={t.optionalProfilePreference}
             {...register("familyName")}
           />
           {errors.familyName && (
@@ -147,17 +152,18 @@ export default function SignupForm() {
             </p>
           )}
           <p className="text-xs text-gray-500 mt-1">
-            Optional. Saved locally for your account profile.
+            {t.optionalProfileNote}
           </p>
         </div>
 
         <div className="email flex flex-col gap-1">
-          <label htmlFor="email">Email*</label>
+          <label htmlFor="email">{t.emailAddress}*</label>
           <input
-            className="form-control"
+            className="form-control text-left"
             type="email"
             id="email"
             placeholder="yassinshoura@gmail.com"
+            dir="ltr"
             {...register("email")}
           />
 
@@ -167,13 +173,16 @@ export default function SignupForm() {
         </div>
 
         <div className="password flex flex-col gap-1">
-          <label htmlFor="password">Password*</label>
-          <div className="relative">
+          <label htmlFor="password">{t.password}*</label>
+          <div className="relative" dir="ltr">
             <input
-              className="form-control w-full pl-4 pr-12"
+              className="form-control w-full ps-4 pe-14 text-left"
               type={showPassword ? "text" : "password"}
               id="password"
-              placeholder="create a strong password"
+              placeholder={
+                isArabic ? "أنشئ كلمة مرور قوية" : "Create a strong password"
+              }
+              dir="ltr"
               {...register("password")}
             />
             <button
@@ -181,7 +190,7 @@ export default function SignupForm() {
               onClick={() => {
                 setShowPassword(!showPassword);
               }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              className="absolute end-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
             >
               <FontAwesomeIcon
                 key={showPassword ? "open" : "closed"}
@@ -197,25 +206,28 @@ export default function SignupForm() {
             <p className="text-red-500 mt-0.5">*{errors.password.message}</p>
           ) : (
             <p className="text-xs text-gray-500 mt-2">
-              Must be at least 8 characters with numbers and symbols
+              {t.passwordHelp}
             </p>
           )}
         </div>
 
         <div className="repassword flex flex-col gap-1">
-          <label htmlFor="repassword">Confirm Password</label>
-          <div className="relative">
+          <label htmlFor="repassword">{t.confirmPassword}</label>
+          <div className="relative" dir="ltr">
             <input
-              className="form-control w-full pl-4 pr-12"
+              className="form-control w-full ps-4 pe-14 text-left"
               type={showConfirmPassword ? "text" : "password"}
               id="repassword"
-              placeholder="confirm your password"
+              placeholder={
+                isArabic ? "أكد كلمة المرور" : "Confirm your password"
+              }
+              dir="ltr"
               {...register("rePassword")}
             />
             <button
               type="button"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              className="absolute end-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
             >
               <FontAwesomeIcon icon={faEye} />
             </button>
@@ -226,12 +238,13 @@ export default function SignupForm() {
         </div>
 
         <div className="phone flex flex-col gap-1">
-          <label htmlFor="phone">Phone*</label>
+          <label htmlFor="phone">{t.phoneNumber}*</label>
           <input
-            className="form-control"
+            className="form-control text-left"
             type="tel"
             id="phone"
             placeholder="+2 010 9751 4862"
+            dir="ltr"
             {...register("phone")}
           />
 
@@ -241,19 +254,19 @@ export default function SignupForm() {
         </div>
 
         <div className="city flex flex-col gap-1">
-          <label htmlFor="city">City</label>
+          <label htmlFor="city">{t.city}</label>
           <input
             className="form-control"
             type="text"
             id="city"
-            placeholder="Optional profile preference"
+            placeholder={t.optionalProfilePreference}
             {...register("city")}
           />
           {errors.city && (
             <p className="text-red-500 mt-0.5">*{errors.city.message}</p>
           )}
           <p className="text-xs text-gray-500 mt-1">
-            Optional. Saved locally for your account profile.
+            {t.optionalProfileNote}
           </p>
         </div>
 
@@ -265,13 +278,13 @@ export default function SignupForm() {
             {...register("terms")}
           />
           <label htmlFor="terms">
-            I agree to the{" "}
+            {t.termsPrefix}{" "}
             <Link href="/terms" className="text-primary-600 underline">
-              Terms of Service{" "}
+              {t.termsOfService}{" "}
             </Link>{" "}
-            and{" "}
+            {t.and}{" "}
             <Link href="/privacy-policy" className="text-primary-600 underline">
-              Privacy Policy
+              {t.privacyPolicy}
             </Link>
           </label>
         </div>
@@ -290,21 +303,21 @@ export default function SignupForm() {
           {isSubmitting ? (
             <>
               <FontAwesomeIcon icon={faSpinner} spin className="me-2" />
-              <span>Creating an account</span>
+              <span>{t.creatingAccount}</span>
             </>
           ) : (
             <>
               <FontAwesomeIcon icon={faUserPlus} className="me-2" />
-              <span>Create My Account</span>
+              <span>{t.createMyAccount}</span>
             </>
           )}
         </button>
       </form>
 
       <p className="text-center pt-8 border-t border-gray-300/80">
-        Already have an account?{" "}
+        {t.alreadyHaveAccount}{" "}
         <Link href="/login" className="text-primary-600 underline">
-          Sign In
+          {t.signIn}
         </Link>{" "}
       </p>
     </div>

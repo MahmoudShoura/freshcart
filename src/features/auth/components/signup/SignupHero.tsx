@@ -1,3 +1,7 @@
+"use client";
+
+import { useLanguage } from "@/context/language.context";
+import { translations } from "@/context/translations";
 import {
   faShieldHalved,
   faStar,
@@ -8,16 +12,19 @@ import reviewAuthorImg from "../../../../assets/images/review-author.png";
 import Image from "next/image";
 
 export default function SignupHero() {
+  const { language } = useLanguage();
+  const t = translations[language];
+
   return (
     <div className="space-y-8 py-10">
       <div className="welcome-msg">
         <h2 className="text-4xl font-bold">
-          Welcome to <span className="text-primary-600">FreshCart</span>
+          {t.signupHeroTitle}{" "}
+          <span dir="ltr" className="inline-block text-primary-600">
+            FreshCart
+          </span>
         </h2>
-        <p className="text-lg m-2">
-          Join thousands of happy customers who enjoy fresh groceries delivered
-          right to their doorsteps
-        </p>
+        <p className="text-lg m-2">{t.signupHeroSubtitle}</p>
       </div>
 
       <ul className="space-y-5    *:flex *:items-center *:gap-3">
@@ -27,8 +34,8 @@ export default function SignupHero() {
           </div>
 
           <div className="content">
-            <h3 className="font-semibold">Premium Quality</h3>
-            <p className="text-gray-600">Premium quality products sourced from trusted suppliers.</p>
+            <h3 className="font-semibold">{t.premiumQuality}</h3>
+            <p className="text-gray-600">{t.premiumQualityText}</p>
           </div>
         </li>
 
@@ -38,8 +45,8 @@ export default function SignupHero() {
           </div>
 
           <div className="content">
-            <h3 className="font-semibold">Fast Delivery</h3>
-            <p className="text-gray-600">Same-day delivery available in most areas</p>
+            <h3 className="font-semibold">{t.fastDelivery}</h3>
+            <p className="text-gray-600">{t.fastDeliveryText}</p>
           </div>
         </li>
 
@@ -49,8 +56,8 @@ export default function SignupHero() {
           </div>
 
           <div className="content">
-            <h3 className="font-semibold">Secure Shopping</h3>
-            <p className="text-gray-600">Your data and payments are completely secure</p>
+            <h3 className="font-semibold">{t.secureShopping}</h3>
+            <p className="text-gray-600">{t.secureShoppingText}</p>
           </div>
         </li>
       </ul>

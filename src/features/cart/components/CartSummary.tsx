@@ -81,7 +81,9 @@ export default function CartSummary({
           <div className="space-y-3">
             <div className="flex justify-between text-gray-600">
               <span>Subtotal</span>
-              <span className="font-medium text-gray-900">{subtotal} EGP</span>
+              <span className="font-medium text-gray-900" dir="ltr">
+                {subtotal} EGP
+              </span>
             </div>
 
             <div className="flex justify-between  text-gray-600">
@@ -98,12 +100,12 @@ export default function CartSummary({
             <div className="border-t border-dashed border-gray-200 pt-3 mt-3">
               <div className="flex justify-between items-baseline">
                 <span className="text-gray-900 font-semibold">Total</span>
-                <div className="text-right">
+                <div className="text-end">
                   <span className=" text-2xl font-bold text-gray-900">
                     {" "}
                     {total}{" "}
                   </span>
-                  <span className="text-sm text-gray-500 ml-1">EGP</span>
+                  <span className="text-sm text-gray-500 ms-1">EGP</span>
                 </div>
               </div>
             </div>

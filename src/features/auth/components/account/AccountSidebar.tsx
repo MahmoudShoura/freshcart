@@ -7,25 +7,31 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useLanguage } from "@/context/language.context";
+import { translations } from "@/context/translations";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const accountLinks = [
-  { label: "Account", href: "/account", icon: faUser },
-  { label: "Orders", href: "/account/orders", icon: faBoxOpen },
-  { label: "Wishlist", href: "/account/wishlist", icon: faHeart },
-  { label: "Cart", href: "/account/cart", icon: faCartShopping },
-];
-
 export default function AccountSidebar() {
   const pathname = usePathname();
+  const { language } = useLanguage();
+  const t = translations[language];
+
+  const accountLinks = [
+    { label: t.account, href: "/account", icon: faUser },
+    { label: t.orders, href: "/account/orders", icon: faBoxOpen },
+    { label: t.wishlist, href: "/account/wishlist", icon: faHeart },
+    { label: t.cart, href: "/account/cart", icon: faCartShopping },
+  ];
 
   return (
     <aside className="hidden lg:block sticky top-28 self-start bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
       <div className="px-5 py-5 border-b border-gray-100">
-        <h2 className="text-base font-bold text-gray-900">Account Center</h2>
+        <h2 className="text-base font-bold text-gray-900">
+          {t.accountCenter}
+        </h2>
         <p className="text-xs text-gray-500 mt-1">
-          Manage your profile and activity
+          {t.accountCenterSubtitle}
         </p>
       </div>
 
