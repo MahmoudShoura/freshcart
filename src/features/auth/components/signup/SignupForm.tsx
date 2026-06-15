@@ -9,7 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupFormValues, signupSchema } from "../../schemas/signup.schema";
 import signupAction from "../../server/signup.actions";
@@ -25,9 +25,9 @@ export default function SignupForm() {
 
   const {
     register,
+    control,
     handleSubmit,
     setError,
-    watch,
     formState: { errors, isSubmitting },
   } = useForm<signupFormValues>({
     defaultValues: {
@@ -45,7 +45,10 @@ export default function SignupForm() {
     reValidateMode: "onChange",
   });
 
-  const passwordValue = watch("password");
+  const passwordValue = useWatch({
+    control,
+    name: "password",
+  });
 
   const onSubmit: SubmitHandler<signupFormValues> = async (values) => {
     try {
