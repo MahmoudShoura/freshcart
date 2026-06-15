@@ -7,6 +7,7 @@ import {
   faReceipt,
   faShieldAlt,
   faShoppingBag,
+  faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,6 +28,7 @@ import { clearCart } from "@/features/cart/store/cart.slice";
 
 export default function CheckoutScreen() {
   const [paymentMethod, setPaymentMethod] = useState<"cash" | "card">("cash");
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
 
   const { cartId, totalCartPrice, numberOfCartItems } = useAppSelector((state) => state.cart);
 
@@ -59,8 +61,13 @@ export default function CheckoutScreen() {
   });
 
   const onSubmit: SubmitHandler<shippingAddressValues> = async (values) => {
+    if (isCheckingOut) return;
+
+    setIsCheckingOut(true);
+
     try {
       if (!cartId) {
+        toast.error("Your cart is empty. Please add items before checkout.");
         return;
       }
 
@@ -93,7 +100,11 @@ export default function CheckoutScreen() {
           }, 3000);
         }
       }
-    } catch {}
+    } catch {
+      toast.error("Checkout failed. Please try again.");
+    } finally {
+      setIsCheckingOut(false);
+    }
   };
 
   return (
@@ -214,11 +225,15 @@ export default function CheckoutScreen() {
                   {/* Submit Button */}
                   <button
                     type="submit"
-                    className="w-full mt-6 bg-linear-to-r from-primary-600 to-primary-700 text-white py-4 rounded-xl font-bold hover:from-primary-700 hover:to-primary-800 transition-colors duration-100"
+                    disabled={isCheckingOut}
+                    className="w-full mt-6 bg-linear-to-r from-primary-600 to-primary-700 text-white py-4 rounded-xl font-bold hover:from-primary-700 hover:to-primary-800 transition-colors duration-100 disabled:opacity-60 disabled:cursor-not-allowed"
                   >
                     <>
-                      <FontAwesomeIcon icon={faShieldAlt} /> {"  "}
-                      Proceed to Payment
+                      <FontAwesomeIcon
+                        icon={isCheckingOut ? faSpinner : faShieldAlt}
+                        spin={isCheckingOut}
+                      />{" "}
+                      {isCheckingOut ? "Processing..." : "Proceed to Payment"}
                     </>
                   </button>
                   {/* Trust Badges */}
