@@ -2,6 +2,7 @@
 
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
 
 export default function Account() {
   return (
@@ -19,9 +20,12 @@ export default function Account() {
 
             <div className="flex items-center gap-6">
               <div className="relative">
-                <img
+                <Image
                   src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
                   alt="User Avatar"
+                  width={112}
+                  height={112}
+                  unoptimized
                   className="w-28 h-28 rounded-full object-cover border border-gray-500 shadow-sm"
                 />
 

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faShoppingCart,
@@ -77,9 +78,11 @@ export default async function NotFound() {
                 className="bg-white p-6 rounded-xl shadow hover:shadow-md transition text-center cursor-pointer"
               >
                 <div className="w-16 h-16 mx-auto flex items-center justify-center bg-green-100 rounded-full mb-3 overflow-hidden">
-                  <img
+                  <Image
                     src={category.image}
                     alt={category.name}
+                    width={64}
+                    height={64}
                     className="w-full h-full object-cover"
                   />
                 </div>
