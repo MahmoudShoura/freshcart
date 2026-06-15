@@ -74,7 +74,7 @@ export default function StartResetForgottenPassword() {
             setStep("otp");
             return;
           }
-        } catch (fallbackError) {
+        } catch {
           
         }
       }

@@ -18,7 +18,6 @@ export default function WishlistScreen({
 }: WishlistScreenProps) {
   const dispatch = useAppDispatch();
   const { products } = useAppSelector((state) => state.wishlist);
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(setWishlist(initialWishlist));

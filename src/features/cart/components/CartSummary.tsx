@@ -1,6 +1,5 @@
 import { faTruck } from "@fortawesome/free-regular-svg-icons";
 import {
-  faArrowLeft,
   faArrowRight,
   faLock,
   faShieldAlt,

@@ -93,7 +93,7 @@ export default function CheckoutScreen() {
           }, 3000);
         }
       }
-    } catch (error) {}
+    } catch {}
   };
 
   return (

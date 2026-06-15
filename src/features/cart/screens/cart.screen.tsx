@@ -1,6 +1,6 @@
 "use client";
 
-import { AppState, useAppSelector } from "@/store/store";
+import { useAppSelector } from "@/store/store";
 import {
   faArrowLeft,
   faCheck,
@@ -12,7 +12,6 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
-import { useSelector } from "react-redux";
 import CartItem from "../components/CartItem";
 import CartSummary from "../components/CartSummary";
 import { useDispatch } from "react-redux";
@@ -54,7 +53,7 @@ export default function CartScreen() {
       dispatch(clearCart());
 
       toast.success("Cart cleared successfully");
-    } catch (error) {
+    } catch {
       toast.error("Failed to clear cart");
     }
   };

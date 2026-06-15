@@ -17,11 +17,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { Product } from "../../types/Products.types";
-import {
-  WishlistProduct,
-  WishlistError,
-} from "@/features/wishlist/types/wishlist.types";
-import Rating from "@/components/ui/Rating";
+import { WishlistError } from "@/features/wishlist/types/wishlist.types";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/image-gallery.css";
 import { useState } from "react";
@@ -31,10 +27,7 @@ import {
 } from "@/features/wishlist/server/wishlist.actions";
 import { useAddToCart } from "@/features/cart/hooks/useAddToCart";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import {
-  setWishlist,
-  setWishlistIds,
-} from "@/features/wishlist/store/wishlist.slice";
+import { setWishlistIds } from "@/features/wishlist/store/wishlist.slice";
 import { toast } from "react-toastify";
 
 export default function ProductInfo({ product }: { product: Product }) {

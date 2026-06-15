@@ -74,7 +74,7 @@ export default async function RootLayout({
         products: wishlistResponse,
         wishlistIds: wishlistResponse.map((p: WishlistProduct) => p._id),
       };
-    } catch (error) {
+    } catch {
       cartState = defaultCartState;
     }
   }

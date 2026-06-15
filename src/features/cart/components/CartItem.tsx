@@ -21,7 +21,7 @@ import { useAppDispatch } from "@/store/store";
 
 export default function CartItem({ info }: { info: CartItemType }) {
   const { _id, count, price, product } = info;
-  const { brand, category, imageCover, quantity, title, id } = product;
+  const { category, imageCover, quantity, title, id } = product;
 
   const dispatch = useAppDispatch();
 
@@ -58,7 +58,7 @@ export default function CartItem({ info }: { info: CartItemType }) {
 
     if (result.isConfirmed) {
       dispatch(removeProduct({ id }));
-      const response = await removeProductFromCart(id);
+      await removeProductFromCart(id);
       toast.success("Item removed from cart");
     }
   };

@@ -31,7 +31,7 @@ export default function ResetForgottenPassword() {
 
     setIsLoading(true);
     try {
-      const { data } = await axios.put(
+      await axios.put(
         "https://ecommerce.routemisr.com/api/v1/auth/resetPassword",
         {
           email,

@@ -15,16 +15,12 @@ import { Product } from "../types/Products.types";
 import Rating from "@/components/ui/Rating";
 import { useAddToCart } from "@/features/cart/hooks/useAddToCart";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import {
   addToWishlist,
   removeFromWishlist,
 } from "@/features/wishlist/server/wishlist.actions";
-import {
-  WishlistProduct,
-  WishlistError,
-} from "@/features/wishlist/types/wishlist.types";
+import { WishlistError } from "@/features/wishlist/types/wishlist.types";
 import { setWishlistIds } from "@/features/wishlist/store/wishlist.slice";
 import Image from "next/image";
 
