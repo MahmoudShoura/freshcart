@@ -18,6 +18,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import PasswordStrengthChecker from "@/utils/PasswordStrengthChecker";
 
+const PROFILE_PREFERENCES_KEY = "freshcart-profile-preferences";
+
 export default function SignupForm() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
@@ -32,10 +34,12 @@ export default function SignupForm() {
   } = useForm<signupFormValues>({
     defaultValues: {
       name: "",
+      familyName: "",
       email: "",
       password: "",
       rePassword: "",
       phone: "",
+      city: "",
       terms: false,
     },
 
@@ -55,6 +59,21 @@ export default function SignupForm() {
       const response = await signupAction(values);
 
       if (response?.success) {
+        localStorage.setItem(
+          PROFILE_PREFERENCES_KEY,
+          JSON.stringify({
+            displayName: values.name,
+            familyName: values.familyName?.trim() || "",
+            phoneNumber: values.phone,
+            city: values.city?.trim() || "",
+            visibility: {
+              familyName: false,
+              phoneNumber: false,
+              city: false,
+            },
+          }),
+        );
+
         toast.success(response.message);
         setTimeout(() => {
           router.push("/login");
@@ -111,6 +130,25 @@ export default function SignupForm() {
           {errors.name && (
             <p className="text-red-500 mt-0.5">*{errors.name.message}</p>
           )}
+        </div>
+
+        <div className="family-name flex flex-col gap-1">
+          <label htmlFor="familyName">Family Name</label>
+          <input
+            className="form-control"
+            type="text"
+            id="familyName"
+            placeholder="Optional profile preference"
+            {...register("familyName")}
+          />
+          {errors.familyName && (
+            <p className="text-red-500 mt-0.5">
+              *{errors.familyName.message}
+            </p>
+          )}
+          <p className="text-xs text-gray-500 mt-1">
+            Optional. Saved locally for your account profile.
+          </p>
         </div>
 
         <div className="email flex flex-col gap-1">
@@ -200,6 +238,23 @@ export default function SignupForm() {
           {errors.phone && (
             <p className="text-red-500 mt-0.5">*{errors.phone.message}</p>
           )}
+        </div>
+
+        <div className="city flex flex-col gap-1">
+          <label htmlFor="city">City</label>
+          <input
+            className="form-control"
+            type="text"
+            id="city"
+            placeholder="Optional profile preference"
+            {...register("city")}
+          />
+          {errors.city && (
+            <p className="text-red-500 mt-0.5">*{errors.city.message}</p>
+          )}
+          <p className="text-xs text-gray-500 mt-1">
+            Optional. Saved locally for your account profile.
+          </p>
         </div>
 
         <div className="terms flex gap-2 items-center">

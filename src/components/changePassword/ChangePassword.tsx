@@ -10,7 +10,7 @@ export default function ChangePassword() {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  
+
   const [currentPassword, setCurrentPassword] = useState("");
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
@@ -53,8 +53,11 @@ export default function ChangePassword() {
 
   return (
     <>
-      <div className="bg-gray-50 min-h-screen flex justify-center items-start pb-10 px-4 mt-10">
-        <form onSubmit={handleSubmit} className="w-full max-w-4xl bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+      <div className="flex justify-center">
+        <form
+          onSubmit={handleSubmit}
+          className="w-full max-w-4xl bg-white rounded-2xl shadow-sm border border-gray-100 p-10"
+        >
           <h2 className="text-2xl font-semibold text-gray-800 mb-2">
             Change Password
           </h2>
@@ -144,7 +147,7 @@ export default function ChangePassword() {
 
           {/* Action Buttons */}
           <div className="flex justify-end gap-4">
-            <button 
+            <button
               type="button"
               onClick={() => {
                 setCurrentPassword("");
@@ -156,7 +159,7 @@ export default function ChangePassword() {
               Cancel
             </button>
 
-            <button 
+            <button
               type="submit"
               disabled={isLoading}
               className="px-6 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 transition font-medium disabled:bg-gray-400"

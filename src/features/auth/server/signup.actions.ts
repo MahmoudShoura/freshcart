@@ -33,8 +33,13 @@ export default async function signupAction(values: signupFormValues) {
   }
 
   //  * validation => success
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { terms, ...requestBody } = values;
+  const requestBody = {
+    name: values.name,
+    email: values.email,
+    password: values.password,
+    rePassword: values.rePassword,
+    phone: values.phone,
+  };
 
   try {
     const options: AxiosRequestConfig = {
