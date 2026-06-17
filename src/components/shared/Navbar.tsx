@@ -9,7 +9,6 @@ import {
   faCartShopping,
   faChevronDown,
   faEllipsis,
-  faMagnifyingGlass,
   faPhone,
   faSignOutAlt,
   faUserPlus,
@@ -30,6 +29,7 @@ import { getAllCategories } from "@/features/categories/server/categories.action
 import { Category } from "@/features/categories/types/category.types";
 import { useLanguage } from "@/context/language.context";
 import { translations } from "@/context/translations";
+import SearchBox from "@/features/search/components/SearchBox";
 
 export default function Navbar() {
   const { logout } = useLogout();
@@ -156,18 +156,13 @@ export default function Navbar() {
               </Link>
             </h1>
 
-            <search className="relative hidden lg:block">
-              <input
-                type="text"
-                placeholder={t.searchPlaceholder}
-                className="min-w-64 form-control pe-10 pe-4 ps-12 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500/30"
-              />
-
-              <FontAwesomeIcon
-                icon={faMagnifyingGlass}
-                className="absolute end-4 top-1/2 -translate-y-1/2 text-gray-400"
-              />
-            </search>
+            <SearchBox
+              className="relative hidden lg:block"
+              inputClassName="min-w-64 form-control ps-12 pe-4 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500/30"
+              placeholder={t.searchPlaceholder}
+              buttonLabel={t.searchButtonLabel}
+              maxSuggestions={6}
+            />
 
             <ul className="hidden lg:flex gap-8 items-center">
               <li>
@@ -383,18 +378,18 @@ hover:scale-105
                 </button>
               </div>
 
-              <search className="relative ">
-                <input
-                  type="text"
-                  placeholder={t.searchPlaceholder}
-                  className="min-w-74 form-control pe-10 ps-4"
-                />
-
-                <FontAwesomeIcon
-                  icon={faMagnifyingGlass}
-                  className="absolute end-4 top-1/2 -translate-1/2"
-                />
-              </search>
+              <SearchBox
+                className="relative"
+                inputClassName="min-w-74 form-control ps-12 pe-4"
+                placeholder={t.searchPlaceholder}
+                buttonLabel={t.searchButtonLabel}
+                maxSuggestions={5}
+                onSearch={() => {
+                  if (isMenuOpen) {
+                    toggleMenu();
+                  }
+                }}
+              />
 
               <div>
                 <h2 className="text-xl font-bold"> {t.mainMenu}</h2>
